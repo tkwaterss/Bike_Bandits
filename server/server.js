@@ -9,9 +9,11 @@ app.use(cors());
 app.use(express.static('public'))
 
 const {
-    loadPage
+    loadPage,
+    getTickets
 } = require('./controller');
 
 app.get('/', loadPage)
+app.get('/api/home', getTickets)
 
 app.listen(SERVER_PORT, () => console.log(`App running on ${SERVER_PORT}`))
