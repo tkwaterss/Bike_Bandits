@@ -83,15 +83,21 @@ module.exports = {
                     sequelize.query(`
                         INSERT INTO tickets (client_id, bike_id, status_id, due_date, description)
                         VALUES (${client_id}, ${bike_id}, 1, '${dueDate}', '${description}');
-                    `).then(res.status(200).send(req.body))
-                })
+                        
+                        SELECT MAX(ticket_id) AS ticket_id
+                        FROM tickets;
+                    `).then(dbRes => {
+                        const {ticket_id} = dbRes[0][0];
+                        req.body.ticketId = ticket_id;
+                        res.status(200).send(req.body);
+                    }).catch(err => console.log(err))
+                }).catch(err => console.log(err))
             } else {
                 console.log('phone does not exist')
                 sequelize.query(`
                 
                 `)
             }
-        })
-        .catch(err => console.log(err))
+        }).catch(err => console.log(err))
     }
 }
