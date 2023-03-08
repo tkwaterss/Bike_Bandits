@@ -1,6 +1,34 @@
+* {
+    margin: 0px;
+}
 body {
     background-color: antiquewhite;
 }
 img {
     height: 200px;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgb(230, 196, 146);
+}
+.company {
+    display:flex;
+    align-items: center;
+}
+
+.ticketSearch {
+    text-align: center;
+    padding: 20px;
+}
+.ticketDiv {
+    display:flex;
+    justify-content: space-evenly;
+    padding: 5px;
+    list-style-type: none;
+}
+li {
+    padding: 0 20px;
 }

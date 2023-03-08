@@ -10,10 +10,12 @@ app.use(express.static('public'))
 
 const {
     loadPage,
-    getTickets
+    getTickets,
+    searchTickets
 } = require('./controller');
 
 app.get('/', loadPage)
 app.get('/api/home', getTickets)
+app.get('/api/home/search', searchTickets)
 
 app.listen(SERVER_PORT, () => console.log(`App running on ${SERVER_PORT}`))

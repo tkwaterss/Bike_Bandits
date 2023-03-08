@@ -9,33 +9,33 @@
 </head>
 <body>
     <header>
-        <img src="./images/bikebandits.webp">
-        <h1>Bike Bandits</h1>
-        <ul>
-            <li>Home</li>
-            <li>New Ticket</li>
-        </ul>
+        <div class="company">
+            <img src="./images/bikebandits.webp">
+            <h1>Bike Bandits</h1>
+        </div>
+        <nav id="navbar">
+            <ol>
+                <li class="links"><a href="./home.html">Home</a></li>
+                <li class="links"><a href="./newTicket.html">New Ticket</a></li>
+            </ol>
+        </nav>
+    
     </header>
 
-    <form>
-        <input type="text">
+    <form class="ticketSearch">
+        <input id="searchInput" type="text" placeholder="name">
         <select>
-            <option value="all" selected>All Tickets</option>
-            <option value="checkedIn">Checked In</option>
-            <option value="progress">In Progress</option>
-            <option value="complete">Complete and Notified</option>
-            <option value="paid">Paid and Picked Up</option>
+            <option value="All Tickets" selected>All Tickets</option>
+            <option value="Checked In">Checked In</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Complete and Notified">Complete and Notified</option>
+            <option value="Paid for and Picked Up">Paid and Picked Up</option>
         </select>
         <input type="submit">
     </form>
 
     <main>
-        <div>
-            <h4>Full Name</h4>
-            <h4>phone number</h4>
-            <h4>Bike description</h4>
-            <h4>Total Price</h4>
-        </div>
+        
     </main>
 
     <footer>
@@ -62,5 +62,6 @@
 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="home.js"></script>
+    <script src="controller.js"></script>
 </body>
 </html>
