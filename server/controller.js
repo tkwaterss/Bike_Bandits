@@ -63,7 +63,7 @@ module.exports = {
         .catch(err => console.log(err))
     },
     addNewTicket: (req, res) => {
-        const {firstname, lastname, phone, email, brand, model, color, size, description} = req.body;
+        const {firstname, lastname, phone, email, brand, model, color, size, description, dueDate} = req.body;
         
         sequelize.query(`
         SELECT phone
@@ -77,11 +77,14 @@ module.exports = {
                     FROM clients AS c
                     JOIN bikes AS b
                     ON c.client_id = b.client_id
-                    WHERE phone = '${phone}';
-
-                    INSERT INTO tickets (client_id, bike_id, status_id, due_date, description)
-                    VALUES (${client_id}, ${bike_id}, 1, ${due_date}, ${description})
-                `)
+                    WHERE c.phone = '${phone}';
+                `).then(dbRes => {
+                    const {client_id, bike_id} = dbRes[0][0];
+                    sequelize.query(`
+                        INSERT INTO tickets (client_id, bike_id, status_id, due_date, description)
+                        VALUES (${client_id}, ${bike_id}, 1, '${dueDate}', '${description}');
+                    `).then(res.status(200).send(req.body))
+                })
             } else {
                 console.log('phone does not exist')
                 sequelize.query(`

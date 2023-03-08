@@ -56,7 +56,8 @@ const newTicketHandler = event => {
         model: document.getElementById('model').value,
         color: document.getElementById('color').value,
         size: document.getElementById('size').value,
-        description: document.getElementById('description').value
+        description: document.getElementById('description').value,
+        dueDate: document.getElementById('dueDate').value
     }
 
     newTicketData.firstname = formatInput(newTicketData.firstname);
