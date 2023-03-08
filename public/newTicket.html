@@ -22,10 +22,41 @@
     
     </header>
 
-    
-
     <main>
+        <form id="newTicket">
+            <section class="newTicketForm ticketInputs" id="clientForm">
+                <h3>Client Information</h3>
+                <label for="firstname">First Name:</label>
+                <input type="text" id="firstname" name="firstname" placeholder="Billy" required>
+                <label for="lastname">Last Name:</label>
+                <input type="text" id="lastname" name="lastname" placeholder="Bobby" required>
+                <label for="phone">Phone Number:</label>
+                <input type="tel" id="phone" name="phone" placeholder="801-123-1234" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
+                <label for="email">Your Email:</label>
+                <input type="email" id="email" name="email" placeholder="youremail@email.com" required>
+            </section>
+            <section class="newTicketForm ticketInputs" id="bikeForm">
+                <h3>Bike Information</h3>
+                <label for="brand">Brand:</label>
+                <input type="text" id="brand" name="brand" placeholder="Giant" required>
+                <label for="model">Model:</label>
+                <input type="text" id="model" name="model" placeholder="Trance" required>
+                <label for="color">Color:</label>
+                <input type="text" id="color" name="color" placeholder="Blue" required>
+                <label for="size">Size:</label>
+                <input type="text" id="size" name="size" placeholder="Large" required>
+            </section>
+            <!-- there may be an issue with resizing the box(wrap undoes) -->
+            <section class="newTicketForm">
+                <label for="description">Repair Description:</label>
+                <textarea name="description" id="description" cols="80" rows="10"></textarea>
+            </section>
+            <input type="submit">
+        </form>
 
+        <section class="newTicketForm" id="items">
+
+        </section>
     </main>
 
     <footer>
@@ -33,6 +64,7 @@
     </footer>
 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="home.js"></script>
+    <script src="./controller.js"></script>
+    <script src="newTicket.js"></script>
 </body>
 </html>

@@ -23,12 +23,35 @@ header {
     text-align: center;
     padding: 20px;
 }
+.ticketContainer {
+    border: 2px Solid grey;
+    border-radius: 10px;
+    margin: 5px 50px;
+}
+.ticketContainer:hover {
+    background-color: #80808050;
+    box-shadow: 0 0 5px 1px grey;
+}
 .ticketDiv {
     display:flex;
     justify-content: space-evenly;
     padding: 5px;
     list-style-type: none;
+    align-items: center;
 }
 li {
     padding: 0 20px;
+}
+#newTicket {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+
+}
+.newTicketForm {
+    display:flex;
+    flex-direction: column;
+}
+.ticketInputs {
+    width: 400px;
 }

@@ -20,7 +20,7 @@ module.exports = {
 
     getTickets: (req, res) => {
         sequelize.query(`
-            SELECT SUM(i.price) AS price, c.firstname, c.lastname, c.phone, b.brand, b.model, t.due_date
+            SELECT SUM(i.price) AS price, c.firstname, c.lastname, c.phone, b.brand, b.model, t.due_date, t.ticket_id, s.status
             FROM tickets AS t
                 JOIN tickets_items AS ti
                 ON t.ticket_id = ti.ticket_id
@@ -30,7 +30,9 @@ module.exports = {
                 ON t.client_id = c.client_id
                 JOIN bikes AS b
                 ON c.client_id = b.client_id
-            GROUP BY t.ticket_id, c.firstname, c.lastname, c.phone, b.brand, b.model
+                JOIN statuses AS s
+                ON t.status_id = s.status_id
+            GROUP BY t.ticket_id, c.firstname, c.lastname, c.phone, b.brand, b.model, s.status
             LIMIT 10;
         `).then(dbRes => res.status(200).send(dbRes[0]))
         .catch(err => console.log(err))
@@ -42,7 +44,7 @@ module.exports = {
             queryStatus = ''
         }
         sequelize.query(`
-        SELECT SUM(i.price) AS price, s.status, c.firstname, c.lastname, c.phone, b.brand, b.model, t.due_date
+        SELECT SUM(i.price) AS price, s.status, c.firstname, c.lastname, c.phone, b.brand, b.model, t.due_date, t.ticket_id
         FROM tickets AS t
             JOIN tickets_items AS ti
             ON t.ticket_id = ti.ticket_id
@@ -58,6 +60,35 @@ module.exports = {
         GROUP BY t.ticket_id, c.firstname, c.lastname, c.phone, b.brand, b.model, s.status
         LIMIT 10;
         `).then(dbRes => res.status(200).send(dbRes[0]))
+        .catch(err => console.log(err))
+    },
+    addNewTicket: (req, res) => {
+        const {firstname, lastname, phone, email, brand, model, color, size, description} = req.body;
+        
+        sequelize.query(`
+        SELECT phone
+        FROM clients
+        WHERE phone = '${phone}';
+        `).then(dbRes => {
+            let match = dbRes[0][0]
+            if(match.phone === phone) {
+                sequelize.query(`
+                    SELECT c.client_id, b.bike_id
+                    FROM clients AS c
+                    JOIN bikes AS b
+                    ON c.client_id = b.client_id
+                    WHERE phone = '${phone}';
+
+                    INSERT INTO tickets (client_id, bike_id, status_id, due_date, description)
+                    VALUES (${client_id}, ${bike_id}, 1, ${due_date}, ${description})
+                `)
+            } else {
+                console.log('phone does not exist')
+                sequelize.query(`
+                
+                `)
+            }
+        })
         .catch(err => console.log(err))
     }
 }
