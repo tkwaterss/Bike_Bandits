@@ -64,14 +64,14 @@ module.exports = {
     },
     addNewTicket: (req, res) => {
         const {firstname, lastname, phone, email, brand, model, color, size, description, dueDate} = req.body;
-        
+        console.log(phone)
         sequelize.query(`
-        SELECT phone
-        FROM clients
-        WHERE phone = '${phone}';
+            SELECT phone
+            FROM clients
+            WHERE phone = '${phone}';
         `).then(dbRes => {
-            let match = dbRes[0][0]
-            if(match.phone === phone) {
+            console.log(dbRes[0][0])
+            if(dbRes[0][0]) {
                 sequelize.query(`
                     SELECT c.client_id, b.bike_id
                     FROM clients AS c
@@ -84,20 +84,67 @@ module.exports = {
                         INSERT INTO tickets (client_id, bike_id, status_id, due_date, description)
                         VALUES (${client_id}, ${bike_id}, 1, '${dueDate}', '${description}');
                         
-                        SELECT MAX(ticket_id) AS ticket_id
-                        FROM tickets;
+                        SELECT t.ticket_id, c.firstname, c.lastname, c.email, c.phone, b.brand, b.model, b.color, b.size
+                        FROM tickets AS t
+                        JOIN clients AS c
+                        ON c.client_id = t.client_id
+                        JOIN bikes AS b
+                        ON b.bike_id = t.bike_id
+                        WHERE ticket_id IN (
+                            SELECT MAX(ticket_id) AS ticket_id
+                            FROM tickets
+                        );
                     `).then(dbRes => {
-                        const {ticket_id} = dbRes[0][0];
-                        req.body.ticketId = ticket_id;
-                        res.status(200).send(req.body);
+                        dbRes[0][0].dueDate = dueDate;
+                        dbRes[0][0].description = description;
+                        res.status(200).send(dbRes[0])
                     }).catch(err => console.log(err))
                 }).catch(err => console.log(err))
             } else {
                 console.log('phone does not exist')
                 sequelize.query(`
-                
-                `)
+                    INSERT INTO clients (firstname, lastname, phone, email)
+                    VALUES ('${firstname}', '${lastname}', '${phone}', '${email}');
+
+                    SELECT MAX(client_id) AS client_id
+                    FROM clients;
+                `).then(dbRes => {
+                    const {client_id} = dbRes[0][0];
+                    sequelize.query(`
+                        INSERT INTO bikes (client_id, brand, model, color, size)
+                        VALUES ('${client_id}', '${brand}', '${model}', '${color}', '${size}');
+
+                        SELECT MAX(bike_id) AS bike_id
+                        FROM bikes;
+                    `).then(dbRes => {
+                        const {bike_id} = dbRes[0][0];
+                        sequelize.query(`
+                            INSERT INTO tickets (client_id, bike_id, status_id, due_date, description)
+                            VALUES (${client_id}, ${bike_id}, 1, '${dueDate}', '${description}');
+                            
+                            SELECT t.ticket_id, c.firstname, c.lastname, c.email, c.phone, b.brand, b.model, b.color, b.size
+                            FROM tickets AS t
+                            JOIN clients AS c
+                            ON c.client_id = t.client_id
+                            JOIN bikes AS b
+                            ON b.bike_id = t.bike_id
+                            WHERE ticket_id IN (
+                                SELECT MAX(ticket_id) AS ticket_id
+                                FROM tickets
+                            );
+                        `).then(dbRes => {
+                            dbRes[0][0].dueDate = dueDate;
+                            dbRes[0][0].description = description;
+                            res.status(200).send(dbRes[0])
+                        }).catch(err => console.log(err))
+                    }).catch(err => console.log(err))
+                }).catch(err => console.log(err))
             }
         }).catch(err => console.log(err))
     }
 }
+//create new client
+//create new bike
+//Get client and bike id's
+//create new ticket
+//send back appropriate data
