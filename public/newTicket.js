@@ -1,3 +1,5 @@
+const newTicket = document.getElementById('newTicket')
+
 const errCallback = err => console.log(err);
 //upon successful post, opens the viewWindow page
 //window.location() for redirect
