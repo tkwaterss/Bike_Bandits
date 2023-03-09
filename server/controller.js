@@ -59,7 +59,29 @@ module.exports = {
         WHERE c.firstname LIKE '%${value}%' ${queryStatus}
         GROUP BY t.ticket_id, c.firstname, c.lastname, c.phone, b.brand, b.model, s.status
         LIMIT 10;
-        `).then(dbRes => res.status(200).send(dbRes[0]))
+        `).then(dbRes => {
+            if(dbRes[0][0]) {
+                res.status(200).send(dbRes[0])
+            } else {
+                sequelize.query(`
+                SELECT SUM(i.price) AS price, c.firstname, c.lastname, c.phone, b.brand, b.model, t.due_date, t.ticket_id, s.status
+                FROM tickets AS t
+                    JOIN tickets_items AS ti
+                    ON t.ticket_id = ti.ticket_id
+                    JOIN items AS i
+                    ON ti.item_id = i.item_id
+                    JOIN clients AS c
+                    ON t.client_id = c.client_id
+                    JOIN bikes AS b
+                    ON c.client_id = b.client_id
+                    JOIN statuses AS s
+                    ON t.status_id = s.status_id
+                GROUP BY t.ticket_id, c.firstname, c.lastname, c.phone, b.brand, b.model, s.status
+                LIMIT 10;
+                `).then(dbRes => res.status(200).send(dbRes[0]))
+                .catch(err => console.log(err))
+            }
+        })
         .catch(err => console.log(err))
     },
     addNewTicket: (req, res) => {
@@ -143,8 +165,3 @@ module.exports = {
         }).catch(err => console.log(err))
     }
 }
-//create new client
-//create new bike
-//Get client and bike id's
-//create new ticket
-//send back appropriate data
