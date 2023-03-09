@@ -3,9 +3,18 @@
 }
 body {
     background-color: antiquewhite;
+    display:flex;
+    flex-wrap: wrap;
 }
 img {
     height: 200px;
+}
+header {
+    width: 100vw;
+}
+main {
+    width: 75vw;
+    border: solid;
 }
 
 header {
@@ -54,4 +63,22 @@ li {
 }
 .ticketInputs {
     width: 400px;
+}
+#ticketDisplay {
+    width: 23vw;
+    border: solid;
+}
+.viewTicketContainer {
+    padding: 10px;
+    margin: 10px;
+    border: solid 2px grey;
+}
+.left {
+    width: 50%;
+    display:inline-block
+}
+.right {
+    width: 50%;
+    display:inline-block;
+    text-align: right;
 }

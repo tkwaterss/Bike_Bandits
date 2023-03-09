@@ -22,10 +22,10 @@
         </nav>
     
     </header>
-    <button>EDIT</button>
-    <button>DELETE</button>
-    <h2 id="viewTicketId">123</h2>
     <main>
+        <button>EDIT</button>
+        <button>DELETE</button>
+        <h2 id="viewTicketId">123</h2>
         <section id="newTicket">
             <section class="newTicketForm ticketInputs" id="clientForm">
                 <h3>Client Information</h3>
@@ -48,15 +48,12 @@
                 <h4 id="viewSize" name="viewSize">Size</h4>
             </section>
         </section>
-        <!-- there may be an issue with resizing the box(wrap undoes) -->
         <form>
             <section class="newTicketForm">
                 <label for="viewDescription">Repair Description:</label>
                 <textarea name="viewDescription" id="viewDescription" cols="80" rows="10">This should be populated with whatever was written when the ticket was created</textarea>
                 <label for="viewDueDate">Due Date:</label>
                 <input type="date" id="viewDueDate" name="viewDueDate" required>
-                <!-- make sure that the due date is populated -->
-                <!-- These fields should save when done -->
             </section>
             <section id="searchForItems">
                 <!-- the two sets of fields will be toggled by the Create new item button -->
@@ -106,6 +103,29 @@
         </section>
     </main>
 
+    <section id="ticketDisplay">
+        <form class="viewTicketSearch">
+            <input id="viewSearchInput" type="text" placeholder="name">
+            <select id="sideStatus">
+                <option value="All Tickets" selected>All Tickets</option>
+                <option value="Checked In">Checked In</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Complete and Notified">Complete and Notified</option>
+                <option value="Paid for and Picked Up">Paid and Picked Up</option>
+            </select>
+            <input type="submit">
+        </form>
+        <section id="sideTicketContainer">
+            <div class="viewTicketContainer">
+                <span class="left">Ticket ID:</span><span class="right">25</span><br>
+                <span class="left">Customer Name:</span><span class="right">Billy Bob</span><br>
+                <span class="left">Phone:</span><span class="right">123-123-1234</span><br>
+                <span class="left">Due Date:</span><span class="right">12-12-1234</span><br>
+                <span class="left">Status</span><span class="right">In Progress</span>
+            </div>
+        </section>
+    </section>
+
     <footer>
         <div>
             <h4>Bike Bandits</h4>
@@ -130,7 +150,6 @@
 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="utilities.js"></script>
-    <!-- <script src="newTicket.js"></script> -->
     <script src="ticketView.js"></script>
 </body>
 </html>

@@ -153,5 +153,21 @@ module.exports = {
         `).then(dbRes => {
             res.status(200).send(dbRes[0][0])
         }).catch(err => console.log(err))
+    },
+    getSideTickets: (req, res) => {
+        sequelize.query(`
+            SELECT c.firstname, c.lastname, c.phone, t.due_date, t.ticket_id, s.status
+            FROM tickets AS t
+                JOIN tickets_items AS ti
+                ON t.ticket_id = ti.ticket_id
+                JOIN clients AS c
+                ON t.client_id = c.client_id
+                JOIN statuses AS s
+                ON t.status_id = s.status_id
+            GROUP BY t.ticket_id, c.firstname, c.lastname, c.phone, s.status
+            ORDER BY t.due_date
+            LIMIT 10;
+        `).then(dbRes => res.status(200).send(dbRes[0]))
+        .catch(err => console.log(err))
     }
 }
