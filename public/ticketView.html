@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Bike Bandits</title>
+</head>
+<body>
+    <header>
+        <div class="company">
+            <img src="./images/bikebandits.webp">
+            <h1>Bike Bandits</h1>
+        </div>
+        <nav id="navbar">
+            <ol>
+                <li class="links"><a href="./home.html">Home</a></li>
+                <li class="links"><a href="./newTicket.html">New Ticket</a></li>
+                <li><a href="./ticketView.html">Ticket View</a></li>
+            </ol>
+        </nav>
+    
+    </header>
+    <button>EDIT</button>
+    <button>DELETE</button>
+    <main>
+        <section id="newTicket">
+            <section class="newTicketForm ticketInputs" id="clientForm">
+                <h3>Client Information</h3>
+                <label for="name">Customer Name:</label>
+                <h4 id="name" name="name">Tobin Waters</h4>
+                <label for="phone">Phone:</label>
+                <h4 id="phone" name="phone">123-123-1234</h4>
+                <label for="email">Email;</label>
+                <h4 id="email" name="email">email@email.com</h4>
+            </section>
+            <section class="newTicketForm ticketInputs" id="bikeForm">
+                <h3>Bike Information</h3>
+                <label for="brand">Brand:</label>
+                <h4 id="brand" name="brand">Santa Cruz</h4>
+                <label for="model">Model:</label>
+                <h4 id="model" name="model">Nomad</h4>
+                <label for="color">Color:</label>
+                <h4 id="color" name="color">Pink</h4>
+                <label for="size">Size:</label>
+                <h4 id="color" name="color">Medium</h4>
+            </section>
+        </section>
+        <!-- there may be an issue with resizing the box(wrap undoes) -->
+        <form>
+            <section class="newTicketForm">
+                <label for="description">Repair Description:</label>
+                <textarea name="description" id="description" cols="80" rows="10">This should be populated with whatever was written when the ticket was created</textarea>
+                <label for="dueDate">Due Date:</label>
+                <input type="date" id="dueDate" name="dueDate" required>
+                <!-- make sure that the due date is populated -->
+                <!-- These fields should save when done -->
+            </section>
+            <section id="searchForItems">
+                <!-- the two sets of fields will be toggled by the Create new item button -->
+                <label for="itemSearch">Search for work items:</label>
+                <input type="text" id="searchInput">
+                <label for="newItemInput" class="hide">New Item Description:</label>
+                <input type="text"  class="hide"id="newItemInput" name="newItemInput" placeholder="Install New Chain">
+                <label for="newItemPrice" class="hide">New Item Price:</label>
+                <input type="text"  class="hide"id="newItemPrice" name="newItemPrice" placeholder="$20.00">
+                <input type="submit">
+                <button>Create New Item</button>
+            </section>
+        </form>
+
+        <section class="newTicketForm" id="items">
+            <div class="ticketDiv ticketContainer">
+                <p>Description of something to fix</p>
+                <h4>$200.00</h4>
+                <button>X</button>
+            </div>
+            <div class="ticketDiv ticketContainer">
+                <p>Description of something to fix</p>
+                <h4>$200.00</h4>
+                <button>X</button>
+            </div>
+            <div class="ticketDiv ticketContainer">
+                <p>Description of something to fix</p>
+                <h4>$200.00</h4>
+                <button>X</button>
+            </div>
+            <div class="ticketDiv ticketContainer">
+                <p>Description of something to fix</p>
+                <h4>$200.00</h4>
+                <button>X</button>
+            </div>
+            <div class="ticketDiv ticketContainer">
+                <p>Description of something to fix</p>
+                <h4>$200.00</h4>
+                <button>X</button>
+            </div>
+            
+        </section>
+    </main>
+
+    <footer>
+        <div>
+            <h4>Bike Bandits</h4>
+            <ul>
+                <li>Information</li>
+                <li>Information</li>
+                <li>Information</li>
+            </ul>
+            <ul>
+                <li>Information</li>
+                <li>Information</li>
+                <li>Information</li>
+            </ul>
+        </div>
+        <div>
+            <img src="./images/josh-nuttall-XVTWFHcNIko-unsplash.jpg">
+            <img src="./images/josh-nuttall-zkVi57UYHIQ-unsplash.jpg">
+            <img src="./images/mikkel-bech-yjAFnkLtKY0-unsplash.jpg">
+            <img src="./images/robert-bye-tG36rvCeqng-unsplash.jpg">
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="utilities.js"></script>
+    <script src="ticketView.js"></script>
+</body>
+</html>
