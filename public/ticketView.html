@@ -24,36 +24,37 @@
     </header>
     <button>EDIT</button>
     <button>DELETE</button>
+    <h2 id="viewTicketId">123</h2>
     <main>
         <section id="newTicket">
             <section class="newTicketForm ticketInputs" id="clientForm">
                 <h3>Client Information</h3>
-                <label for="name">Customer Name:</label>
-                <h4 id="name" name="name">Tobin Waters</h4>
-                <label for="phone">Phone:</label>
-                <h4 id="phone" name="phone">123-123-1234</h4>
-                <label for="email">Email;</label>
-                <h4 id="email" name="email">email@email.com</h4>
+                <label for="viewName">Customer Name:</label>
+                <h4 id="viewName" name="viewName">first last</h4>
+                <label for="viewPhone">Phone:</label>
+                <h4 id="viewPhone" name="viewPhone">111-111-1111</h4>
+                <label for="viewEmail">Email:</label>
+                <h4 id="viewEmail" name="viewEmail">fake@email.com</h4>
             </section>
             <section class="newTicketForm ticketInputs" id="bikeForm">
                 <h3>Bike Information</h3>
-                <label for="brand">Brand:</label>
-                <h4 id="brand" name="brand">Santa Cruz</h4>
-                <label for="model">Model:</label>
-                <h4 id="model" name="model">Nomad</h4>
-                <label for="color">Color:</label>
-                <h4 id="color" name="color">Pink</h4>
-                <label for="size">Size:</label>
-                <h4 id="color" name="color">Medium</h4>
+                <label for="viewBrand">Brand:</label>
+                <h4 id="viewBrand" name="viewBrand">Brand</h4>
+                <label for="viewModel">Model:</label>
+                <h4 id="viewModel" name="viewModel">Bike</h4>
+                <label for="viewColor">Color:</label>
+                <h4 id="viewColor" name="viewColor">Color</h4>
+                <label for="viewSize">Size:</label>
+                <h4 id="viewSize" name="viewSize">Size</h4>
             </section>
         </section>
         <!-- there may be an issue with resizing the box(wrap undoes) -->
         <form>
             <section class="newTicketForm">
-                <label for="description">Repair Description:</label>
-                <textarea name="description" id="description" cols="80" rows="10">This should be populated with whatever was written when the ticket was created</textarea>
-                <label for="dueDate">Due Date:</label>
-                <input type="date" id="dueDate" name="dueDate" required>
+                <label for="viewDescription">Repair Description:</label>
+                <textarea name="viewDescription" id="viewDescription" cols="80" rows="10">This should be populated with whatever was written when the ticket was created</textarea>
+                <label for="viewDueDate">Due Date:</label>
+                <input type="date" id="viewDueDate" name="viewDueDate" required>
                 <!-- make sure that the due date is populated -->
                 <!-- These fields should save when done -->
             </section>
@@ -70,7 +71,12 @@
             </section>
         </form>
 
-        <section class="newTicketForm" id="items">
+        <section class="newTicketForm" id="itemscontainer">
+            <div id="itemTableHeader" class="ticketDiv">
+                <p>Description</p>
+                <p>Price</p>
+            </div>
+
             <div class="ticketDiv ticketContainer">
                 <p>Description of something to fix</p>
                 <h4>$200.00</h4>
@@ -124,6 +130,7 @@
 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="utilities.js"></script>
+    <!-- <script src="newTicket.js"></script> -->
     <script src="ticketView.js"></script>
 </body>
 </html>

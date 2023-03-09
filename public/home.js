@@ -7,3 +7,4 @@ const searchTickets = (searchValue, searchStatus) => axios.get(`/api/home/search
 getTickets();
 
 ticketSearch.addEventListener('submit', searchHandler);
+ticketContainer.addEventListener('click', homeClickHandler);

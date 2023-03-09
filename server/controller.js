@@ -104,22 +104,9 @@ module.exports = {
                     const {client_id, bike_id} = dbRes[0][0];
                     sequelize.query(`
                         INSERT INTO tickets (client_id, bike_id, status_id, due_date, description)
-                        VALUES (${client_id}, ${bike_id}, 1, '${dueDate}', '${description}');
-                        
-                        SELECT t.ticket_id, c.firstname, c.lastname, c.email, c.phone, b.brand, b.model, b.color, b.size
-                        FROM tickets AS t
-                        JOIN clients AS c
-                        ON c.client_id = t.client_id
-                        JOIN bikes AS b
-                        ON b.bike_id = t.bike_id
-                        WHERE ticket_id IN (
-                            SELECT MAX(ticket_id) AS ticket_id
-                            FROM tickets
-                        );
+                        VALUES (${client_id}, ${bike_id}, 1, '${dueDate}', '${description}');  
                     `).then(dbRes => {
-                        dbRes[0][0].dueDate = dueDate;
-                        dbRes[0][0].description = description;
-                        res.status(200).send(dbRes[0])
+                        res.sendStatus(200)
                     }).catch(err => console.log(err))
                 }).catch(err => console.log(err))
             } else {
@@ -143,25 +130,28 @@ module.exports = {
                         sequelize.query(`
                             INSERT INTO tickets (client_id, bike_id, status_id, due_date, description)
                             VALUES (${client_id}, ${bike_id}, 1, '${dueDate}', '${description}');
-                            
-                            SELECT t.ticket_id, c.firstname, c.lastname, c.email, c.phone, b.brand, b.model, b.color, b.size
-                            FROM tickets AS t
-                            JOIN clients AS c
-                            ON c.client_id = t.client_id
-                            JOIN bikes AS b
-                            ON b.bike_id = t.bike_id
-                            WHERE ticket_id IN (
-                                SELECT MAX(ticket_id) AS ticket_id
-                                FROM tickets
-                            );
                         `).then(dbRes => {
-                            dbRes[0][0].dueDate = dueDate;
-                            dbRes[0][0].description = description;
-                            res.status(200).send(dbRes[0])
+                            res.sendStatus(200)
                         }).catch(err => console.log(err))
                     }).catch(err => console.log(err))
                 }).catch(err => console.log(err))
             }
+        }).catch(err => console.log(err))
+    },
+    getRecentTicket: (req, res) => {
+        sequelize.query(`
+        SELECT t.ticket_id, t.due_date, t.description, c.firstname, c.lastname, c.email, c.phone, b.brand, b.model, b.color, b.size
+        FROM tickets AS t
+        JOIN clients AS c
+        ON c.client_id = t.client_id
+        JOIN bikes AS b
+        ON b.bike_id = t.bike_id
+        WHERE ticket_id IN (
+            SELECT MAX(ticket_id) AS ticket_id
+            FROM tickets
+        );
+        `).then(dbRes => {
+            res.status(200).send(dbRes[0][0])
         }).catch(err => console.log(err))
     }
 }

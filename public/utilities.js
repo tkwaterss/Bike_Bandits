@@ -1,6 +1,7 @@
 const main = document.querySelector('main');
 const ticketSearch = document.querySelector('.ticketSearch');
 const newTicket = document.getElementById('newTicket')
+const ticketContainer = document.getElementsByClassName('ticketContainer')
 
 const formatInput = string => {
     return string.toLowerCase().charAt(0).toUpperCase() + string.slice(1);
@@ -71,3 +72,34 @@ const newTicketHandler = event => {
 
     newTicket.reset();
 }
+//we are going to grab the dbRes and destructure it
+//take that data an populate the view Ticket page
+// const displayTicket = ticketObj => {
+//     //window.location() for redirect
+//     window.open('./ticketView.html', '_blank')
+//     console.log(ticketObj);
+//     const {ticket_id, firstname, lastname, email, phone, brand, model, color, size, dueDate, description} = ticketObj;
+//     //first need to redirect to view Ticket page
+//     //then immediately populate fields
+
+//     document.getElementById('viewTicketId').textContent = ticket_id
+//     document.getElementById('viewName').textContent = `${firstname} ${lastname}`
+//     document.getElementById('viewPhone').textConent = phone
+//     document.getElementById('viewEmail').textConent = email
+//     document.getElementById('viewBrand').textConent = brand
+//     document.getElementById('viewModel').textConent = model
+//     document.getElementById('viewColor').textConent = color
+//     document.getElementById('viewSize').textConent = size
+//     document.getElementById('viewDescription').value = description
+//     document.getElementById('viewDueDate').value = dueDate
+    
+//     //pull in all the elements
+//     //asign text conent of each text element to be correct info
+// }
+
+// const homeClickHandler = event => {
+//     //target the div, grab the ticket id
+//     //send the ticket id to the server to grab other info
+//     //server grabs related ticket info and sends back
+//     //send that info into the displayTicket function
+// }
