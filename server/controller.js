@@ -169,5 +169,18 @@ module.exports = {
             LIMIT 10;
         `).then(dbRes => res.status(200).send(dbRes[0]))
         .catch(err => console.log(err))
+    },
+    getTicketById: (req, res) => {
+        const {ticketId} = req.query
+        //Two options here
+        //First: try to get all items and client and bike info in one query
+        //Second: split up the customer/bike info and item info into two queries
+            //One function for client info
+            //One function for items
+        sequelize.query(`
+
+        `).then(dbRes => {
+            res.status(200).send(dbRes[0][0])
+        })
     }
 }

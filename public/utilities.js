@@ -6,7 +6,7 @@ const displayTickets = (ticketArr) => {
     main.innerHTML = ''
     console.log(ticketArr);
     ticketArr.forEach(ticketObj => {
-        let {firstname, lastname, phone, brand, model, due_date, price, ticket_id, status} = ticketObj;
+        const {firstname, lastname, phone, brand, model, due_date, price, ticket_id, status} = ticketObj;
         let newTicket = document.createElement('div')
         newTicket.classList.add('ticketDiv')
         newTicket.classList.add('ticketContainer')
@@ -31,7 +31,6 @@ const displayTickets = (ticketArr) => {
         newTicket.appendChild(newList)
         main.appendChild(newTicket);
     })
-    
 }
 
 const searchHandler = event => {
@@ -75,6 +74,24 @@ const newTicketHandler = event => {
     newTicket.reset();
 }
 
+const displayTicket = (ticketObj) => {
+        console.log(ticketObj);
+        const {ticket_id, firstname, lastname, email, phone, brand, model, color, size, due_date, description} = ticketObj;
+        
+        document.getElementById('viewTicketId').textContent = ticket_id
+        document.getElementById('viewName').textContent = `${firstname} ${lastname}`
+        document.getElementById('viewPhone').textContent = phone
+        document.getElementById('viewEmail').textContent = email
+        document.getElementById('viewBrand').textContent = brand
+        document.getElementById('viewModel').textContent = model
+        document.getElementById('viewColor').textContent = color
+        document.getElementById('viewSize').textContent = size
+        document.getElementById('viewDescription').value = description
+        document.getElementById('viewDueDate').value = due_date
+
+        //need to add ability to display ticket items
+}
+
 const displaySideTickets = (ticketArr) => {
     ticketContainer.innerHTML = ''
     console.log(ticketArr);
@@ -113,8 +130,9 @@ const sideSearchHandler = event => {
 }
 
 const sideClickHandler = event => {
-    console.log(event.target.textContent)
-    //target the div, grab the ticket id
+    let ticketId = +(event.target.textContent);
+    getSelectedTicket(ticketId);
+
     //send the ticket id to the server to grab other info
     //server grabs related ticket info and sends back
     //send that info into the displayTicket function
