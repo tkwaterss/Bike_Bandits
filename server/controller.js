@@ -172,15 +172,47 @@ module.exports = {
     },
     getTicketById: (req, res) => {
         const {ticketId} = req.query
-        //Two options here
-        //First: try to get all items and client and bike info in one query
-        //Second: split up the customer/bike info and item info into two queries
-            //One function for client info
-            //One function for items
         sequelize.query(`
-
+            SELECT t.ticket_id, t.due_date, t.description, c.firstname, c.lastname, c.email, c.phone, b.brand, b.model, b.color, b.size
+            FROM tickets AS t
+            JOIN clients AS c
+            ON c.client_id = t.client_id
+            JOIN bikes AS b
+            ON b.bike_id = t.bike_id
+            WHERE ticket_id = ${ticketId};
         `).then(dbRes => {
             res.status(200).send(dbRes[0][0])
         })
+    },
+    getTicketItems: (req, res) => {
+        const {ticketId} = req.query
+        sequelize.query(`
+            SELECT i.*, ti.ticket_item_id
+            FROM items AS i
+            JOIN tickets_items AS ti
+            ON i.item_id = ti.item_id
+            JOIN tickets AS t
+            ON t.ticket_id = ti.ticket_id
+            WHERE t.ticket_id = ${ticketId}
+        `).then(dbRes => {
+            res.status(200).send(dbRes[0])
+        }).catch(err => console.log(err))
+    },
+    deleteTicketItem: (req, res) => {
+        const {targetId, ticketId} = req.query
+        sequelize.query(`
+            DELETE FROM tickets_items
+            WHERE ticket_item_id = ${targetId};
+
+            SELECT i.*, ti.ticket_item_id
+            FROM items AS i
+            JOIN tickets_items AS ti
+            ON i.item_id = ti.item_id
+            JOIN tickets AS t
+            ON t.ticket_id = ti.ticket_id
+            WHERE t.ticket_id = ${ticketId}
+        `).then(dbRes => {
+            res.status(200).send(dbRes[0])
+        }).catch(err=> console.log(err))
     }
 }

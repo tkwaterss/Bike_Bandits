@@ -132,8 +132,35 @@ const sideSearchHandler = event => {
 const sideClickHandler = event => {
     let ticketId = +(event.target.textContent);
     getSelectedTicket(ticketId);
+    getTicketItems(ticketId);
+}
 
-    //send the ticket id to the server to grab other info
-    //server grabs related ticket info and sends back
-    //send that info into the displayTicket function
+const displayItems = itemsArray => {
+    itemsContainer.innerHTML = '';
+    console.log('This is the displayItems function', itemsArray)
+    itemsArray.forEach(itemObj => {
+        const {ticket_item_id, item_id, title, price} = itemObj
+        let newItem = document.createElement('div');
+        newItem.classList.add('ticketDiv')
+        newItem.classList.add('ticketContainer')
+
+        let deleteBtn = document.createElement('button')
+        deleteBtn.textContent = 'X'
+        deleteBtn.setAttribute('id',`${ticket_item_id}`)
+        deleteBtn.addEventListener('click', deleteItemHandler)
+
+        newItem.innerHTML = `
+            <p>${item_id}</p>
+            <p>${title}</p>
+            <h4>$${price}.00</h4>
+        `
+        newItem.appendChild(deleteBtn)
+        itemsContainer.appendChild(newItem);
+    })
+}
+
+const deleteItemHandler = event => {
+    let targetId = +(event.target.id)
+    let ticketId = +(document.getElementById('viewTicketId').textContent)
+    deleteTicketItem(targetId, ticketId);
 }
