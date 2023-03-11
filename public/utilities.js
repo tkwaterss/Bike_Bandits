@@ -322,3 +322,32 @@ const editTicketFormHandler = event => {
 
     editTicket(newTicketData, targetId);
 }
+
+const displayEditTicket = (ticketObj) => {
+    console.log(ticketObj);
+    const {firstname, lastname, email, phone, brand, model, color, size} = ticketObj;
+    let ticketInfo = document.getElementById('newTicket');
+    ticketInfo.innerHTML = `
+        <section class="newTicketForm ticketInputs" id="clientForm">
+            <h3>Client Information</h3>
+            <label for="viewName">Customer Name:</label>
+            <h4 id="viewName" name="viewName">${firstname} ${lastname}</h4>
+            <label for="viewPhone">Phone:</label>
+            <h4 id="viewPhone" name="viewPhone">${phone}</h4>
+            <label for="viewEmail">Email:</label>
+            <h4 id="viewEmail" name="viewEmail">${email}</h4>
+        </section>
+        <section class="newTicketForm ticketInputs" id="bikeForm">
+            <h3>Bike Information</h3>
+            <label for="viewBrand">Brand:</label>
+            <h4 id="viewBrand" name="viewBrand">${brand}</h4>
+            <label for="viewModel">Model:</label>
+            <h4 id="viewModel" name="viewModel">${model}</h4>
+            <label for="viewColor">Color:</label>
+            <h4 id="viewColor" name="viewColor">${color}</h4>
+            <label for="viewSize">Size:</label>
+            <h4 id="viewSize" name="viewSize">${size}</h4>
+        </section>
+    `
+    getTickets();
+}

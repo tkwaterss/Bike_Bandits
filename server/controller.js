@@ -312,7 +312,31 @@ module.exports = {
     editTicket: (req, res) => {
         const {firstname, lastname, phone, email, brand, model, color, size} = req.body
         const {targetId} = req.query
-        console.log(firstname, lastname, phone, email, brand, model, color, size)
-        console.log(targetId)
+        sequelize.query(`
+            SELECT client_id, bike_id
+            FROM tickets
+            WHERE ticket_id = ${targetId};
+        `).then(dbRes => {
+            const {client_id, bike_id} = dbRes[0][0]
+            sequelize.query(`
+                UPDATE clients
+                SET firstname = '${firstname}', lastname = '${lastname}', phone = '${phone}', email = '${email}'
+                WHERE client_id = ${client_id};
+                
+                UPDATE bikes
+                SET brand = '${brand}', model = '${model}', color = '${color}', size = '${size}'
+                WHERE bike_id = ${bike_id};
+
+                SELECT t.ticket_id, t.due_date, t.description, c.firstname, c.lastname, c.email, c.phone, b.brand, b.model, b.color, b.size
+                FROM tickets AS t
+                JOIN clients AS c
+                ON c.client_id = t.client_id
+                JOIN bikes AS b
+                ON b.bike_id = t.bike_id
+                WHERE ticket_id = ${targetId};
+            `).then(dbRes => {
+                res.status(200).send(dbRes[0][0])
+            }).catch(err => console.log(err))
+        }).catch(err => console.log(err))
     }
 }

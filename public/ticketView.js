@@ -12,6 +12,7 @@ const ticketsCallback = ({ data : ticketArr }) => displaySideTickets(ticketArr);
 const mainTicketCallback = ({ data : ticketObj }) => displayTicket(ticketObj);
 const itemsCallback = ({data : itemsArray }) => displayItems(itemsArray);
 const searchItemsCallback = ({ data : itemsArray }) => displaySearchItems(itemsArray);
+const editTicketCallback = ({ data : ticketObj }) => displayEditTicket(ticketObj);
 
 const getTickets = () => axios.get('/api/sideBar').then(ticketsCallback).catch(errCallback);
 const searchSideTickets = (searchValue, searchStatus) => axios.get(`/api/sideBar/search?value=${searchValue}&status=${searchStatus}`).then(ticketsCallback).catch(errCallback);
@@ -24,7 +25,7 @@ const searchItems = (searchInput) => axios.get(`/api/items?searchWord=${searchIn
 const addNewItem = (newItemObj) => axios.post(`/api/items`, newItemObj).then(itemsCallback).catch(errCallback);
 const addTicketItem = (targetId, ticketId) => axios.post(`/api/items/byId?targetId=${targetId}&ticketId=${ticketId}`).then(itemsCallback).catch(errCallback);
 const deleteTicket = (targetId) => axios.delete(`/api/ticket?targetId=${targetId}`).then(mainTicketCallback).catch(errCallback);
-const editTicket = (ticketObj, targetId) => axios.put(`/api/ticket/edit?targetId=${targetId}`, ticketObj).then(mainTicketCallback).catch(errCallback);
+const editTicket = (ticketObj, targetId) => axios.put(`/api/ticket/edit?targetId=${targetId}`, ticketObj).then(editTicketCallback).catch(errCallback);
 
 getTickets();
 getLastTicket();
