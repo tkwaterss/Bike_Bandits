@@ -17,7 +17,10 @@ const {
     getSideTickets,
     getTicketById,
     getTicketItems,
-    deleteTicketItem
+    deleteTicketItem,
+    updateTicket,
+    searchItems,
+    addNewItem
 } = require('./controller');
 
 app.get('/', loadPage)
@@ -30,5 +33,8 @@ app.get('/api/sideBar/search', searchTickets)
 app.get('/api/ticket/byId', getTicketById)
 app.get('/api/items/byId', getTicketItems)
 app.delete('/api/items/byId', deleteTicketItem)
+app.put('/api/ticket', updateTicket)
+app.get('/api/items', searchItems)
+app.post('/api/items', addNewItem)
 
 app.listen(SERVER_PORT, () => console.log(`App running on ${SERVER_PORT}`))

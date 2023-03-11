@@ -17,7 +17,7 @@
             <ol>
                 <li class="links"><a href="./home.html">Home</a></li>
                 <li class="links"><a href="./newTicket.html">New Ticket</a></li>
-                <li><a href="./ticketView.html">Ticket View</a></li>
+                <li class="links"><a href="./ticketView.html">Ticket View</a></li>
             </ol>
         </nav>
     
@@ -25,30 +25,32 @@
     <main>
         <button>EDIT</button>
         <button>DELETE</button>
-        <h2 id="viewTicketId">123</h2>
+        <h2 id="viewTicketId"></h2>
+        <h2 id="headerDueDate">A Date</h2>
         <section id="newTicket">
             <section class="newTicketForm ticketInputs" id="clientForm">
                 <h3>Client Information</h3>
                 <label for="viewName">Customer Name:</label>
-                <h4 id="viewName" name="viewName">first last</h4>
+                <h4 id="viewName" name="viewName"></h4>
                 <label for="viewPhone">Phone:</label>
-                <h4 id="viewPhone" name="viewPhone">111-111-1111</h4>
+                <h4 id="viewPhone" name="viewPhone"></h4>
                 <label for="viewEmail">Email:</label>
-                <h4 id="viewEmail" name="viewEmail">fake@email.com</h4>
+                <h4 id="viewEmail" name="viewEmail"></h4>
             </section>
             <section class="newTicketForm ticketInputs" id="bikeForm">
                 <h3>Bike Information</h3>
                 <label for="viewBrand">Brand:</label>
-                <h4 id="viewBrand" name="viewBrand">Brand</h4>
+                <h4 id="viewBrand" name="viewBrand"></h4>
                 <label for="viewModel">Model:</label>
-                <h4 id="viewModel" name="viewModel">Bike</h4>
+                <h4 id="viewModel" name="viewModel"></h4>
                 <label for="viewColor">Color:</label>
-                <h4 id="viewColor" name="viewColor">Color</h4>
+                <h4 id="viewColor" name="viewColor"></h4>
                 <label for="viewSize">Size:</label>
-                <h4 id="viewSize" name="viewSize">Size</h4>
+                <h4 id="viewSize" name="viewSize"></h4>
             </section>
         </section>
-        <form>
+
+        <form id="ticketItemsForm">
             <section class="newTicketForm">
                 <label for="viewDescription">Repair Description:</label>
                 <textarea name="viewDescription" id="viewDescription" cols="80" rows="10">This should be populated with whatever was written when the ticket was created</textarea>
@@ -62,11 +64,12 @@
                 <label for="newItemInput" class="hide">New Item Description:</label>
                 <input type="text"  class="hide"id="newItemInput" name="newItemInput" placeholder="Install New Chain">
                 <label for="newItemPrice" class="hide">New Item Price:</label>
-                <input type="text"  class="hide"id="newItemPrice" name="newItemPrice" placeholder="$20.00">
+                $<input type="text"  class="hide"id="newItemPrice" name="newItemPrice" placeholder="20.00">
                 <input type="submit">
                 <button>Create New Item</button>
             </section>
         </form>
+
         <section class="newTicketForm">
             <div id="itemTableHeader" class="ticketDiv">
                 <p>Description</p>

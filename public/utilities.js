@@ -1,6 +1,9 @@
 const formatInput = string => {
     return string.toLowerCase().charAt(0).toUpperCase() + string.slice(1);
 }
+const formatItems = string => {
+    return string.toUpperCase()
+}
 
 const displayTickets = (ticketArr) => {
     main.innerHTML = ''
@@ -79,6 +82,7 @@ const displayTicket = (ticketObj) => {
         const {ticket_id, firstname, lastname, email, phone, brand, model, color, size, due_date, description} = ticketObj;
         
         document.getElementById('viewTicketId').textContent = ticket_id
+        document.getElementById('headerDueDate').textContent = due_date
         document.getElementById('viewName').textContent = `${firstname} ${lastname}`
         document.getElementById('viewPhone').textContent = phone
         document.getElementById('viewEmail').textContent = email
@@ -88,8 +92,6 @@ const displayTicket = (ticketObj) => {
         document.getElementById('viewSize').textContent = size
         document.getElementById('viewDescription').value = description
         document.getElementById('viewDueDate').value = due_date
-
-        //need to add ability to display ticket items
 }
 
 const displaySideTickets = (ticketArr) => {
@@ -163,4 +165,52 @@ const deleteItemHandler = event => {
     let targetId = +(event.target.id)
     let ticketId = +(document.getElementById('viewTicketId').textContent)
     deleteTicketItem(targetId, ticketId);
+}
+
+const ticketItemsFormHandler = event => {
+    event.preventDefault();
+    let description = document.getElementById('viewDescription').value;
+    let dueDate = document.getElementById('viewDueDate').value;
+    let searchInput = formatItems(document.getElementById('searchInput').value);
+    let newItemInput = formatItems(document.getElementById('newItemInput').value);
+    let newItemPrice = +(document.getElementById('newItemPrice').value);
+    let ticketId = +(document.getElementById('viewTicketId').textContent)
+
+    console.log(dueDate)
+
+    if (searchInput) {
+        let ticketData = {
+            ticketId: ticketId,
+            description: description,
+            dueDate: dueDate
+        }
+        updateTicket(ticketData)
+        searchItems(searchInput)
+    } else if (newItemInput && newItemPrice) {
+        let ticketData = {
+            ticketId: ticketId,
+            description: description,
+            dueDate: dueDate
+        }
+        let newItemData = {
+            ticketId: ticketId,
+            newItemInput: newItemInput,
+            newItemPrice: newItemPrice
+        }
+        updateTicket(ticketData)
+        addNewItem(newItemData)
+    } else if (newItemInput || newItemPrice) {
+        alert('please enter a title and price')
+    } else {
+            let data = {
+            ticketId: ticketId,
+            description: description,
+            dueDate: dueDate
+        }
+        updateTicket(data)
+    }
+}
+
+const displaySearchItems = itemsArray => {
+    //This will show the items search results with buttons to add to the current Ticket
 }

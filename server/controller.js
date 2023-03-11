@@ -193,7 +193,7 @@ module.exports = {
             ON i.item_id = ti.item_id
             JOIN tickets AS t
             ON t.ticket_id = ti.ticket_id
-            WHERE t.ticket_id = ${ticketId}
+            WHERE t.ticket_id = ${ticketId};
         `).then(dbRes => {
             res.status(200).send(dbRes[0])
         }).catch(err => console.log(err))
@@ -210,9 +210,64 @@ module.exports = {
             ON i.item_id = ti.item_id
             JOIN tickets AS t
             ON t.ticket_id = ti.ticket_id
-            WHERE t.ticket_id = ${ticketId}
+            WHERE t.ticket_id = ${ticketId};
         `).then(dbRes => {
             res.status(200).send(dbRes[0])
         }).catch(err=> console.log(err))
+    },
+    updateTicket: (req, res) => {
+        const {ticketId, description, dueDate} = req.body
+        sequelize.query(`
+            UPDATE tickets
+            SET description = '${description}', due_date = '${dueDate}'
+            WHERE ticket_id = ${ticketId};
+            
+            SELECT t.ticket_id, t.due_date, t.description, c.firstname, c.lastname, c.email, c.phone, b.brand, b.model, b.color, b.size
+            FROM tickets AS t
+            JOIN clients AS c
+            ON c.client_id = t.client_id
+            JOIN bikes AS b
+            ON b.bike_id = t.bike_id
+            WHERE ticket_id = ${ticketId};
+        `).then(dbRes => {
+            console.log(dbRes[0][0])
+            res.status(200).send(dbRes[0][0])
+        }).catch(err => console.log(err))
+    },
+    searchItems: (req, res) => {
+        const {searchWord} = req.query
+        sequelize.query(`
+            SELECT *
+            FROM items
+            WHERE title LIKE '%${searchWord}%';
+        `).then(dbRes => {
+            res.status(200).send(dbRes[0])
+        }).catch(err => console.log(err))
+    },
+    addNewItem: (req, res) => {
+        const {ticketId, newItemInput, newItemPrice} = req.body
+        sequelize.query(`
+            INSERT INTO items (title, price)
+            VALUES('${newItemInput}', ${newItemPrice});
+            
+            SELECT MAX(item_id) AS item_id
+            FROM items;
+        `).then(dbRes => {
+            const {item_id} = dbRes[0][0]
+            sequelize.query(`
+                INSERT INTO tickets_items (ticket_id, item_id)
+                VALUES(${ticketId}, ${item_id});
+
+                SELECT i.*, ti.ticket_item_id
+                FROM items AS i
+                JOIN tickets_items AS ti
+                ON i.item_id = ti.item_id
+                JOIN tickets AS t
+                ON t.ticket_id = ti.ticket_id
+                WHERE t.ticket_id = ${ticketId};
+            `).then(dbRes => {
+                res.status(200).send(dbRes[0])
+            }).catch(err => console.log(err))
+        })
     }
 }
