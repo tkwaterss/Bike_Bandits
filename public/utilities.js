@@ -38,6 +38,8 @@ const displayTickets = (ticketArr) => {
         newTicket.appendChild(newList)
         main.appendChild(newTicket);
     })
+
+    getTickets();
 }
 
 const searchHandler = event => {
@@ -96,6 +98,8 @@ const displayTicket = (ticketObj) => {
         document.getElementById('viewSize').textContent = size
         document.getElementById('viewDescription').value = description
         document.getElementById('viewDueDate').value = due_date
+
+        getTickets();
 }
 
 const displaySideTickets = (ticketArr) => {
