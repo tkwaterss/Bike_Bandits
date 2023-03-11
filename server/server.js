@@ -20,7 +20,8 @@ const {
     deleteTicketItem,
     updateTicket,
     searchItems,
-    addNewItem
+    addNewItem,
+    addTicketItem
 } = require('./controller');
 
 app.get('/', loadPage)
@@ -36,5 +37,6 @@ app.delete('/api/items/byId', deleteTicketItem)
 app.put('/api/ticket', updateTicket)
 app.get('/api/items', searchItems)
 app.post('/api/items', addNewItem)
+app.post('/api/items/byId', addTicketItem)
 
 app.listen(SERVER_PORT, () => console.log(`App running on ${SERVER_PORT}`))

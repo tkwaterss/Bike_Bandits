@@ -269,5 +269,22 @@ module.exports = {
                 res.status(200).send(dbRes[0])
             }).catch(err => console.log(err))
         })
+    },
+    addTicketItem: (req, res) => {
+        const {targetId, ticketId} = req.query
+        sequelize.query(`
+            INSERT INTO tickets_items (ticket_id, item_id)
+            VALUES(${ticketId}, ${targetId});
+
+            SELECT i.*, ti.ticket_item_id
+            FROM items AS i
+            JOIN tickets_items AS ti
+            ON i.item_id = ti.item_id
+            JOIN tickets AS t
+            ON t.ticket_id = ti.ticket_id
+            WHERE t.ticket_id = ${ticketId};
+        `).then(dbRes => {
+            res.status(200).send(dbRes[0])
+        }).catch(err=> console.log(err))
     }
 }

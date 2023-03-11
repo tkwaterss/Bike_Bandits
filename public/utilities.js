@@ -152,7 +152,6 @@ const displayItems = itemsArray => {
         deleteBtn.addEventListener('click', deleteItemHandler)
 
         newItem.innerHTML = `
-            <p>${item_id}</p>
             <p>${title}</p>
             <h4>$${price}.00</h4>
         `
@@ -212,5 +211,31 @@ const ticketItemsFormHandler = event => {
 }
 
 const displaySearchItems = itemsArray => {
-    //This will show the items search results with buttons to add to the current Ticket
+    searchItemsContainer.innerHTML = '';
+    console.log('This is the displaySearchItems function', itemsArray)
+    itemsArray.forEach(itemObj => {
+        const {item_id, title, price} = itemObj
+        let newItem = document.createElement('div');
+        newItem.classList.add('ticketDiv')
+        newItem.classList.add('ticketContainer')
+
+        let addBtn = document.createElement('button')
+        addBtn.textContent = 'Add To Ticket'
+        addBtn.setAttribute('id',`${item_id}`)
+        addBtn.addEventListener('click', addItemHandler)
+
+        newItem.innerHTML = `
+            <p>${title}</p>
+            <h4>$${price}.00</h4>
+        `
+        newItem.appendChild(addBtn)
+        searchItemsContainer.appendChild(newItem);
+    })
+}
+
+const addItemHandler = event => {
+    let targetId = +(event.target.id)
+    let ticketId = +(document.getElementById('viewTicketId').textContent)
+    addTicketItem(targetId, ticketId)
+    searchItemsContainer.innerHTML = ''
 }
