@@ -1,6 +1,10 @@
-const formatInput = string => {
-    return string.toLowerCase().charAt(0).toUpperCase() + string.slice(1);
-}
+const formatString = string => {
+    let stringArr = string.split(' ')
+    let newStr = stringArr.map(word => {
+        return word.toLowerCase().charAt(0).toUpperCase() + word.slice(1);
+    })
+    return newStr.join(' ')
+ }
 const formatItems = string => {
     return string.toUpperCase()
 }
@@ -238,4 +242,79 @@ const addItemHandler = event => {
     let ticketId = +(document.getElementById('viewTicketId').textContent)
     addTicketItem(targetId, ticketId)
     searchItemsContainer.innerHTML = ''
+}
+
+const ticketDeleteHandler = event => {
+    let targetId = +(document.getElementById('viewTicketId').textContent);
+    deleteTicket(targetId);
+    console.log(targetId)
+}
+
+const editTicketHandler = event => {
+    let targetId = +(document.getElementById('viewTicketId').textContent);
+    let ticketInfo = document.getElementById('newTicket');
+
+    const name = document.getElementById('viewName').textContent
+    const firstname = name.split(' ')[0]
+    const lastname = name.split(' ')[1]
+
+    const phone = document.getElementById('viewPhone').textContent
+    const email = document.getElementById('viewEmail').textContent
+    const brand = document.getElementById('viewBrand').textContent
+    const model = document.getElementById('viewModel').textContent
+    const color = document.getElementById('viewColor').textContent
+    const size = document.getElementById('viewSize').textContent
+
+    ticketInfo.innerHTML = `
+    <form id="editTicket">
+            <section class="newTicketForm ticketInputs" id="clientForm">
+                <h3>Client Information</h3>
+                <label for="firstname">First Name:</label>
+                <input value="${firstname}" type="text" id="firstname" name="firstname" placeholder="Billy" required>
+                <label for="lastname">Last Name:</label>
+                <input value="${lastname}" type="text" id="lastname" name="lastname" placeholder="Bobby" required>
+                <label for="phone">Phone Number:</label>
+                <input value="${phone}" type="tel" id="phone" name="phone" placeholder="801-123-1234" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
+                <label for="email">Your Email:</label>
+                <input value="${email}" type="email" id="email" name="email" placeholder="youremail@email.com" required>
+            </section>
+            <section class="newTicketForm ticketInputs" id="bikeForm">
+                <h3>Bike Information</h3>
+                <label for="brand">Brand:</label>
+                <input value="${brand}" type="text" id="brand" name="brand" placeholder="Giant" required>
+                <label for="model">Model:</label>
+                <input value="${model}" type="text" id="model" name="model" placeholder="Trance" required>
+                <label for="color">Color:</label>
+                <input value="${color}" type="text" id="color" name="color" placeholder="Blue" required>
+                <label for="size">Size:</label>
+                <input value="${size}" type="text" id="size" name="size" placeholder="Large" required>
+            </section>
+            <input type="submit" id="newTicketSubmit">
+        </form>
+    `
+}
+
+const editTicketFormHandler = event => {
+    event.preventDefault();
+    let targetId = +(document.getElementById('viewTicketId').textContent);
+
+    let newTicketData = {
+        firstname: document.getElementById('firstname').value,
+        lastname: document.getElementById('lastname').value,
+        phone: document.getElementById('phone').value,
+        email: document.getElementById('email').value,
+        brand: document.getElementById('brand').value,
+        model: document.getElementById('model').value,
+        color: document.getElementById('color').value,
+        size: document.getElementById('size').value,
+    }
+
+    newTicketData.firstname = formatInput(newTicketData.firstname);
+    newTicketData.lastname = formatInput(newTicketData.lastname);
+    newTicketData.brand = formatInput(newTicketData.brand);
+    newTicketData.model = formatInput(newTicketData.model);
+    newTicketData.color = formatInput(newTicketData.color);
+    newTicketData.size = formatInput(newTicketData.size);
+
+    editTicket(newTicketData, targetId);
 }

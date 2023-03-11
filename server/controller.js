@@ -230,7 +230,6 @@ module.exports = {
             ON b.bike_id = t.bike_id
             WHERE ticket_id = ${ticketId};
         `).then(dbRes => {
-            console.log(dbRes[0][0])
             res.status(200).send(dbRes[0][0])
         }).catch(err => console.log(err))
     },
@@ -286,5 +285,28 @@ module.exports = {
         `).then(dbRes => {
             res.status(200).send(dbRes[0])
         }).catch(err=> console.log(err))
+    },
+    deleteTicket: (req, res) => {
+        const {targetId} = req.query
+        sequelize.query(`
+            DELETE FROM tickets_items
+            WHERE ticket_id = ${targetId};
+            
+            DELETE FROM tickets
+            WHERE ticket_id = ${targetId};
+
+            SELECT t.ticket_id, t.due_date, t.description, c.firstname, c.lastname, c.email, c.phone, b.brand, b.model, b.color, b.size
+            FROM tickets AS t
+            JOIN clients AS c
+            ON c.client_id = t.client_id
+            JOIN bikes AS b
+            ON b.bike_id = t.bike_id
+            WHERE ticket_id IN (
+                SELECT MAX(ticket_id) AS ticket_id
+                FROM tickets
+            );
+        `).then(dbRes => {
+            res.status(200).send(dbRes[0][0])
+        }).catch(err => console.log(err))
     }
 }
