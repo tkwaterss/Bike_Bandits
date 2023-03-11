@@ -308,5 +308,11 @@ module.exports = {
         `).then(dbRes => {
             res.status(200).send(dbRes[0][0])
         }).catch(err => console.log(err))
+    },
+    editTicket: (req, res) => {
+        const {firstname, lastname, phone, email, brand, model, color, size} = req.body
+        const {targetId} = req.query
+        console.log(firstname, lastname, phone, email, brand, model, color, size)
+        console.log(targetId)
     }
 }
