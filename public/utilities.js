@@ -38,8 +38,6 @@ const displayTickets = (ticketArr) => {
         newTicket.appendChild(newList)
         main.appendChild(newTicket);
     })
-
-    getTickets();
 }
 
 const searchHandler = event => {
@@ -85,10 +83,12 @@ const newTicketHandler = event => {
 
 const displayTicket = (ticketObj) => {
         console.log(ticketObj);
-        const {ticket_id, firstname, lastname, email, phone, brand, model, color, size, due_date, description} = ticketObj;
+        let {ticket_id, firstname, lastname, email, phone, brand, model, color, size, due_date, description} = ticketObj;
         
-        document.getElementById('viewTicketId').textContent = ticket_id
-        document.getElementById('headerDueDate').textContent = due_date
+        due_date = due_date.slice(0,10)
+
+        document.getElementById('viewTicketId').textContent = `${ticket_id}`
+        document.getElementById('headerDueDate').textContent = `${due_date}`
         document.getElementById('viewName').textContent = `${firstname} ${lastname}`
         document.getElementById('viewPhone').textContent = phone
         document.getElementById('viewEmail').textContent = email
@@ -119,7 +119,7 @@ const displaySideTickets = (ticketArr) => {
             <span class="left">Customer Name:</span><span class="right">${firstname} ${lastname}</span><br>
             <span class="left">Phone:</span><span class="right">${phone}</span><br>
             <span class="left">Due Date:</span><span class="right">${due_date}</span><br>
-            <span class="left">Status</span><span class="right">${status}</span>
+            <span class="left">Status:</span><span class="right">${status}</span>
         `
         newTicket.appendChild(spanContainer)
         ticketContainer.appendChild(newTicket);
@@ -216,6 +216,7 @@ const ticketItemsFormHandler = event => {
         }
         updateTicket(data)
     }
+    ticketItemsForm.reset();
 }
 
 const displaySearchItems = itemsArray => {
@@ -244,6 +245,7 @@ const displaySearchItems = itemsArray => {
 const addItemHandler = event => {
     let targetId = +(event.target.id)
     let ticketId = +(document.getElementById('viewTicketId').textContent)
+    console.log(targetId, ticketId)
     addTicketItem(targetId, ticketId)
     searchItemsContainer.innerHTML = ''
 }
@@ -354,4 +356,18 @@ const displayEditTicket = (ticketObj) => {
         </section>
     `
     getTickets();
+}
+
+const toggleDelete = event => {
+    console.log('woooooooo')
+    let deleteDiv = document.getElementById('confirmDeleteDiv')
+    let deleteBtn = document.getElementById('ticketDeleteBtn')
+    console.log(event.target.id)
+    if(event.target.id === "ticketDeleteBtn") {
+        deleteBtn.classList.add('hide')
+        deleteDiv.classList.remove('hide')
+    } else {
+        deleteDiv.classList.add('hide')
+        deleteBtn.classList.remove('hide')
+    }
 }

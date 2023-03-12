@@ -4,6 +4,8 @@ const viewTicketSearch = document.querySelector('.viewTicketSearch');
 const itemsContainer = document.getElementById('itemsContainer');
 const ticketItemsForm = document.getElementById('ticketItemsForm');
 const searchItemsContainer = document.getElementById('searchItemsContainer');
+const toggleDeleteBtn = document.querySelector('#ticketDeleteBtn');
+const nevermindBtn = document.querySelector('#nevermindBtn');
 const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
 const editTicketBtn = document.getElementById('editTicketBtn');
 
@@ -34,3 +36,5 @@ viewTicketSearch.addEventListener('submit', sideSearchHandler);
 ticketItemsForm.addEventListener('submit', ticketItemsFormHandler);
 confirmDeleteBtn.addEventListener('click', ticketDeleteHandler);
 editTicketBtn.addEventListener('click', editTicketHandler);
+toggleDeleteBtn.addEventListener('click', toggleDelete);
+nevermindBtn.addEventListener('click', toggleDelete);

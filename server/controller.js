@@ -40,43 +40,31 @@ module.exports = {
     searchTickets: (req, res) => {
         let {value, status} = req.query;
         let queryStatus = `AND s.status LIKE '%${status}%'`
-        if(status = 'All Tickets') {
+        if(status === 'All Tickets') {
             queryStatus = ''
         }
         sequelize.query(`
-        SELECT SUM(i.price) AS price, s.status, c.firstname, c.lastname, c.phone, b.brand, b.model, t.due_date, t.ticket_id
+        SELECT s.status, c.firstname, c.lastname, c.phone, t.due_date, t.ticket_id
         FROM tickets AS t
-            JOIN tickets_items AS ti
-            ON t.ticket_id = ti.ticket_id
-            JOIN items AS i
-            ON ti.item_id = i.item_id
             JOIN clients AS c
             ON t.client_id = c.client_id
-            JOIN bikes AS b
-            ON c.client_id = b.client_id
             JOIN statuses AS s
             ON t.status_id = s.status_id
         WHERE c.firstname LIKE '%${value}%' ${queryStatus}
-        GROUP BY t.ticket_id, c.firstname, c.lastname, c.phone, b.brand, b.model, s.status
+        GROUP BY t.ticket_id, c.firstname, c.lastname, c.phone, s.status
         LIMIT 10;
         `).then(dbRes => {
             if(dbRes[0][0]) {
                 res.status(200).send(dbRes[0])
             } else {
                 sequelize.query(`
-                SELECT SUM(i.price) AS price, c.firstname, c.lastname, c.phone, b.brand, b.model, t.due_date, t.ticket_id, s.status
+                SELECT c.firstname, c.lastname, c.phone, t.due_date, t.ticket_id, s.status
                 FROM tickets AS t
-                    JOIN tickets_items AS ti
-                    ON t.ticket_id = ti.ticket_id
-                    JOIN items AS i
-                    ON ti.item_id = i.item_id
                     JOIN clients AS c
                     ON t.client_id = c.client_id
-                    JOIN bikes AS b
-                    ON c.client_id = b.client_id
                     JOIN statuses AS s
                     ON t.status_id = s.status_id
-                GROUP BY t.ticket_id, c.firstname, c.lastname, c.phone, b.brand, b.model, s.status
+                GROUP BY t.ticket_id, c.firstname, c.lastname, c.phone, s.status
                 LIMIT 10;
                 `).then(dbRes => res.status(200).send(dbRes[0]))
                 .catch(err => console.log(err))
@@ -86,7 +74,6 @@ module.exports = {
     },
     addNewTicket: (req, res) => {
         const {firstname, lastname, phone, email, brand, model, color, size, description, dueDate} = req.body;
-        console.log(phone)
         sequelize.query(`
             SELECT phone
             FROM clients
@@ -158,8 +145,6 @@ module.exports = {
         sequelize.query(`
             SELECT c.firstname, c.lastname, c.phone, t.due_date, t.ticket_id, s.status
             FROM tickets AS t
-                JOIN tickets_items AS ti
-                ON t.ticket_id = ti.ticket_id
                 JOIN clients AS c
                 ON t.client_id = c.client_id
                 JOIN statuses AS s
@@ -219,7 +204,11 @@ module.exports = {
         const {ticketId, description, dueDate} = req.body
         sequelize.query(`
             UPDATE tickets
-            SET description = '${description}', due_date = '${dueDate}'
+            SET description = '${description}' 
+            WHERE ticket_id = ${ticketId};
+
+            UPDATE tickets
+            SET due_date = '${dueDate}'
             WHERE ticket_id = ${ticketId};
             
             SELECT t.ticket_id, t.due_date, t.description, c.firstname, c.lastname, c.email, c.phone, b.brand, b.model, b.color, b.size
