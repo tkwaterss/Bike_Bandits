@@ -15,7 +15,7 @@ const sequelize = new Sequelize(CONNECTION_STRING, {
 
 module.exports = {
     loadPage: (req, res) => {
-        res.status(200).sendFile(path.join(__dirname, '../public/home.html'))
+        res.status(200).sendFile(path.join(__dirname, '../public/ticketView.html'))
     },
 
     getTickets: (req, res) => {
