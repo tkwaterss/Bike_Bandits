@@ -9,6 +9,11 @@ const formatItems = string => {
     return string.toUpperCase()
 }
 
+const formatDescription = string => {
+    return string.replaceAll("'", "''");
+}
+
+
 // const displayTickets = (ticketArr) => {
 //     main.innerHTML = ''
 //     console.log(ticketArr);
@@ -69,6 +74,7 @@ const newTicketHandler = event => {
         dueDate: document.getElementById('viewDueDate').value
     }
 
+    newTicketData.description = formatDescription(newTicketData.description);
     newTicketData.firstname = formatInput(newTicketData.firstname);
     newTicketData.lastname = formatInput(newTicketData.lastname);
     newTicketData.brand = formatInput(newTicketData.brand);
@@ -181,7 +187,7 @@ const deleteItemHandler = event => {
 
 const ticketItemsFormHandler = event => {
     event.preventDefault();
-    let description = document.getElementById('viewDescription').value;
+    let description = formatDescription(document.getElementById('viewDescription').value);
     let dueDate = document.getElementById('viewDueDate').value;
     let searchInput = formatItems(document.getElementById('searchInput').value);
     let newItemInput = formatItems(document.getElementById('newItemInput').value);

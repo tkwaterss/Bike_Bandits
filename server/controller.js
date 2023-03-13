@@ -20,12 +20,8 @@ module.exports = {
 
     getTickets: (req, res) => {
         sequelize.query(`
-            SELECT SUM(i.price) AS total_price, c.firstname, c.lastname, c.phone, b.brand, b.model, t.due_date, t.ticket_id, s.status
+            SELECT c.firstname, c.lastname, c.phone, b.brand, b.model, t.due_date, t.ticket_id, s.status
             FROM tickets AS t
-                JOIN tickets_items AS ti
-                ON t.ticket_id = ti.ticket_id
-                JOIN items AS i
-                ON ti.item_id = i.item_id
                 JOIN clients AS c
                 ON t.client_id = c.client_id
                 JOIN bikes AS b
@@ -127,12 +123,8 @@ module.exports = {
     },
     getRecentTicket: (req, res) => {
         sequelize.query(`
-        SELECT SUM(i.price) AS total_price, t.ticket_id, c.firstname, c.lastname, c.phone, c.email, b.brand, b.model, b.color, b.size, t.due_date, t.description
+        SELECT t.ticket_id, c.firstname, c.lastname, c.phone, c.email, b.brand, b.model, b.color, b.size, t.due_date, t.description
         FROM tickets AS t
-            JOIN tickets_items AS ti
-            ON t.ticket_id = ti.ticket_id
-            JOIN items AS i
-            ON ti.item_id = i.item_id
             JOIN clients AS c
             ON t.client_id = c.client_id
             JOIN bikes AS b
@@ -143,6 +135,7 @@ module.exports = {
             )
         GROUP BY t.ticket_id, c.firstname, c.lastname, c.phone, c.email, b.brand, b.model, b.color, b.size, t.due_date, t.description;
         `).then(dbRes => {
+            console.log(dbRes[0])
             res.status(200).send(dbRes[0][0])
         }).catch(err => console.log(err))
     },
@@ -163,12 +156,8 @@ module.exports = {
     getTicketById: (req, res) => {
         const {ticketId} = req.query
         sequelize.query(`
-        SELECT SUM(i.price) AS total_price, t.ticket_id, c.firstname, c.lastname, c.phone, c.email, b.brand, b.model, b.color, b.size, t.due_date, t.description
+        SELECT t.ticket_id, c.firstname, c.lastname, c.phone, c.email, b.brand, b.model, b.color, b.size, t.due_date, t.description
         FROM tickets AS t
-            JOIN tickets_items AS ti
-            ON t.ticket_id = ti.ticket_id
-            JOIN items AS i
-            ON ti.item_id = i.item_id
             JOIN clients AS c
             ON t.client_id = c.client_id
             JOIN bikes AS b
@@ -221,12 +210,8 @@ module.exports = {
             SET due_date = '${dueDate}'
             WHERE ticket_id = ${ticketId};
             
-            SELECT SUM(i.price) AS total_price, t.ticket_id, c.firstname, c.lastname, c.phone, c.email, b.brand, b.model, b.color, b.size, t.due_date, t.description
+            SELECT t.ticket_id, c.firstname, c.lastname, c.phone, c.email, b.brand, b.model, b.color, b.size, t.due_date, t.description
             FROM tickets AS t
-                JOIN tickets_items AS ti
-                ON t.ticket_id = ti.ticket_id
-                JOIN items AS i
-                ON ti.item_id = i.item_id
                 JOIN clients AS c
                 ON t.client_id = c.client_id
                 JOIN bikes AS b
@@ -299,12 +284,8 @@ module.exports = {
             DELETE FROM tickets
             WHERE ticket_id = ${targetId};
 
-            SELECT SUM(i.price) AS total_price, t.ticket_id, c.firstname, c.lastname, c.phone, c.email, b.brand, b.model, b.color, b.size, t.due_date, t.description
+            SELECT t.ticket_id, c.firstname, c.lastname, c.phone, c.email, b.brand, b.model, b.color, b.size, t.due_date, t.description
             FROM tickets AS t
-                JOIN tickets_items AS ti
-                ON t.ticket_id = ti.ticket_id
-                JOIN items AS i
-                ON ti.item_id = i.item_id
                 JOIN clients AS c
                 ON t.client_id = c.client_id
                 JOIN bikes AS b
@@ -336,12 +317,8 @@ module.exports = {
                 SET brand = '${brand}', model = '${model}', color = '${color}', size = '${size}'
                 WHERE bike_id = ${bike_id};
 
-                SELECT SUM(i.price) AS total_price, t.ticket_id, c.firstname, c.lastname, c.phone, c.email, b.brand, b.model, b.color, b.size, t.due_date, t.description
+                SELECT t.ticket_id, c.firstname, c.lastname, c.phone, c.email, b.brand, b.model, b.color, b.size, t.due_date, t.description
                 FROM tickets AS t
-                    JOIN tickets_items AS ti
-                    ON t.ticket_id = ti.ticket_id
-                    JOIN items AS i
-                    ON ti.item_id = i.item_id
                     JOIN clients AS c
                     ON t.client_id = c.client_id
                     JOIN bikes AS b
