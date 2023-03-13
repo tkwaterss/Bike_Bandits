@@ -98,7 +98,7 @@ const displayTicket = (ticketObj) => {
         document.getElementById('viewName').textContent = `${firstname} ${lastname}`
         document.getElementById('viewPhone').textContent = phone
         document.getElementById('viewEmail').textContent = email
-        document.getElementById('viewPrice').textContent = `$ ${total_price}`
+        // document.getElementById('viewPrice').textContent = `$ ${total_price}`
         document.getElementById('viewBrand').textContent = brand
         document.getElementById('viewModel').textContent = model
         document.getElementById('viewColor').textContent = color
@@ -360,8 +360,8 @@ const displayEditTicket = (ticketObj) => {
             <h4 id="viewPhone" name="viewPhone">${phone}</h4>
             <label for="viewEmail">Email:</label>
             <h4 id="viewEmail" name="viewEmail">${email}</h4>
-            <label class="ticket-left" for="viewPrice">Ticket Cost:</label>
-            <h4 class="ticket-right" id="viewPrice" name="viewPrice">${total_price}</h4>
+           <!-- <label class="ticket-left" for="viewPrice">Ticket Cost:</label>
+            <h4 class="ticket-right" id="viewPrice" name="viewPrice">${total_price}</h4> -->
         </section>
         <section class="newTicketForm ticketInputs" id="bikeForm">
             <h3>Bike Information</h3>

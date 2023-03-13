@@ -2,7 +2,7 @@
     margin: 0px;
 }
 body {
-    background-color: antiquewhite;
+    background-color: rgb(245, 227, 203);
     display:flex;
     flex-wrap: wrap;
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
@@ -18,7 +18,7 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: rgb(230, 196, 146);
+    background-color: rgb(196, 149, 95);
     text-align: center;
 }
 .company {
@@ -43,19 +43,19 @@ nav {
     padding: 0px 4vw;
 }
 a {
-    color: orange;
+    color: black;
 }
 a:link {
     text-decoration: none;
-    color: orange;
+    color: black;
 }
 a:visited {
     text-decoration: none;
-    color: rgb(148, 104, 22);
+    color: black;
 }
 a:hover {
     text-decoration: none;
-    color: black;
+    color: rgb(99, 64, 19);
 }
 a:active {
     text-decoration: none;
@@ -150,7 +150,7 @@ button {
     border-radius: 7px;
 }
 button:hover {
-    background-color: rgb(255, 177, 81);
+    background-color: rgb(211, 145, 60);
 }
 .submit {
     background-color: rgb(175, 114, 0);
@@ -161,7 +161,7 @@ button:hover {
     border-radius: 7px;
 }
 .submit:hover {
-    background-color: rgb(255, 177, 81);
+    background-color: rgb(211, 145, 60);
 }
 .hide {
     display: none;
