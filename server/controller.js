@@ -20,7 +20,7 @@ module.exports = {
 
     getTickets: (req, res) => {
         sequelize.query(`
-            SELECT SUM(i.price) AS price, c.firstname, c.lastname, c.phone, b.brand, b.model, t.due_date, t.ticket_id, s.status
+            SELECT SUM(i.price) AS total_price, c.firstname, c.lastname, c.phone, b.brand, b.model, t.due_date, t.ticket_id, s.status
             FROM tickets AS t
                 JOIN tickets_items AS ti
                 ON t.ticket_id = ti.ticket_id
@@ -127,16 +127,21 @@ module.exports = {
     },
     getRecentTicket: (req, res) => {
         sequelize.query(`
-        SELECT t.ticket_id, t.due_date, t.description, c.firstname, c.lastname, c.email, c.phone, b.brand, b.model, b.color, b.size
+        SELECT SUM(i.price) AS total_price, t.ticket_id, c.firstname, c.lastname, c.phone, c.email, b.brand, b.model, b.color, b.size, t.due_date, t.description
         FROM tickets AS t
-        JOIN clients AS c
-        ON c.client_id = t.client_id
-        JOIN bikes AS b
-        ON b.bike_id = t.bike_id
-        WHERE ticket_id IN (
+            JOIN tickets_items AS ti
+            ON t.ticket_id = ti.ticket_id
+            JOIN items AS i
+            ON ti.item_id = i.item_id
+            JOIN clients AS c
+            ON t.client_id = c.client_id
+            JOIN bikes AS b
+            ON c.client_id = b.client_id
+        WHERE t.ticket_id IN (
             SELECT MAX(ticket_id) AS ticket_id
             FROM tickets
-        );
+            )
+        GROUP BY t.ticket_id, c.firstname, c.lastname, c.phone, c.email, b.brand, b.model, b.color, b.size, t.due_date, t.description;
         `).then(dbRes => {
             res.status(200).send(dbRes[0][0])
         }).catch(err => console.log(err))
@@ -158,13 +163,18 @@ module.exports = {
     getTicketById: (req, res) => {
         const {ticketId} = req.query
         sequelize.query(`
-            SELECT t.ticket_id, t.due_date, t.description, c.firstname, c.lastname, c.email, c.phone, b.brand, b.model, b.color, b.size
-            FROM tickets AS t
+        SELECT SUM(i.price) AS total_price, t.ticket_id, c.firstname, c.lastname, c.phone, c.email, b.brand, b.model, b.color, b.size, t.due_date, t.description
+        FROM tickets AS t
+            JOIN tickets_items AS ti
+            ON t.ticket_id = ti.ticket_id
+            JOIN items AS i
+            ON ti.item_id = i.item_id
             JOIN clients AS c
-            ON c.client_id = t.client_id
+            ON t.client_id = c.client_id
             JOIN bikes AS b
-            ON b.bike_id = t.bike_id
-            WHERE ticket_id = ${ticketId};
+            ON c.client_id = b.client_id
+            WHERE t.ticket_id = ${ticketId}
+        GROUP BY t.ticket_id, c.firstname, c.lastname, c.phone, c.email, b.brand, b.model, b.color, b.size, t.due_date, t.description;
         `).then(dbRes => {
             res.status(200).send(dbRes[0][0])
         })
@@ -211,13 +221,18 @@ module.exports = {
             SET due_date = '${dueDate}'
             WHERE ticket_id = ${ticketId};
             
-            SELECT t.ticket_id, t.due_date, t.description, c.firstname, c.lastname, c.email, c.phone, b.brand, b.model, b.color, b.size
+            SELECT SUM(i.price) AS total_price, t.ticket_id, c.firstname, c.lastname, c.phone, c.email, b.brand, b.model, b.color, b.size, t.due_date, t.description
             FROM tickets AS t
-            JOIN clients AS c
-            ON c.client_id = t.client_id
-            JOIN bikes AS b
-            ON b.bike_id = t.bike_id
-            WHERE ticket_id = ${ticketId};
+                JOIN tickets_items AS ti
+                ON t.ticket_id = ti.ticket_id
+                JOIN items AS i
+                ON ti.item_id = i.item_id
+                JOIN clients AS c
+                ON t.client_id = c.client_id
+                JOIN bikes AS b
+                ON c.client_id = b.client_id
+                WHERE t.ticket_id = ${ticketId}
+            GROUP BY t.ticket_id, c.firstname, c.lastname, c.phone, c.email, b.brand, b.model, b.color, b.size, t.due_date, t.description;
         `).then(dbRes => {
             res.status(200).send(dbRes[0][0])
         }).catch(err => console.log(err))
@@ -284,16 +299,21 @@ module.exports = {
             DELETE FROM tickets
             WHERE ticket_id = ${targetId};
 
-            SELECT t.ticket_id, t.due_date, t.description, c.firstname, c.lastname, c.email, c.phone, b.brand, b.model, b.color, b.size
+            SELECT SUM(i.price) AS total_price, t.ticket_id, c.firstname, c.lastname, c.phone, c.email, b.brand, b.model, b.color, b.size, t.due_date, t.description
             FROM tickets AS t
-            JOIN clients AS c
-            ON c.client_id = t.client_id
-            JOIN bikes AS b
-            ON b.bike_id = t.bike_id
-            WHERE ticket_id IN (
+                JOIN tickets_items AS ti
+                ON t.ticket_id = ti.ticket_id
+                JOIN items AS i
+                ON ti.item_id = i.item_id
+                JOIN clients AS c
+                ON t.client_id = c.client_id
+                JOIN bikes AS b
+                ON c.client_id = b.client_id
+            WHERE t.ticket_id IN (
                 SELECT MAX(ticket_id) AS ticket_id
                 FROM tickets
-            );
+                )
+            GROUP BY t.ticket_id, c.firstname, c.lastname, c.phone, c.email, b.brand, b.model, b.color, b.size, t.due_date, t.description;
         `).then(dbRes => {
             res.status(200).send(dbRes[0][0])
         }).catch(err => console.log(err))
@@ -316,13 +336,18 @@ module.exports = {
                 SET brand = '${brand}', model = '${model}', color = '${color}', size = '${size}'
                 WHERE bike_id = ${bike_id};
 
-                SELECT t.ticket_id, t.due_date, t.description, c.firstname, c.lastname, c.email, c.phone, b.brand, b.model, b.color, b.size
+                SELECT SUM(i.price) AS total_price, t.ticket_id, c.firstname, c.lastname, c.phone, c.email, b.brand, b.model, b.color, b.size, t.due_date, t.description
                 FROM tickets AS t
-                JOIN clients AS c
-                ON c.client_id = t.client_id
-                JOIN bikes AS b
-                ON b.bike_id = t.bike_id
-                WHERE ticket_id = ${targetId};
+                    JOIN tickets_items AS ti
+                    ON t.ticket_id = ti.ticket_id
+                    JOIN items AS i
+                    ON ti.item_id = i.item_id
+                    JOIN clients AS c
+                    ON t.client_id = c.client_id
+                    JOIN bikes AS b
+                    ON c.client_id = b.client_id
+                    WHERE t.ticket_id = ${targetId}
+                GROUP BY t.ticket_id, c.firstname, c.lastname, c.phone, c.email, b.brand, b.model, b.color, b.size, t.due_date, t.description;
             `).then(dbRes => {
                 res.status(200).send(dbRes[0][0])
             }).catch(err => console.log(err))

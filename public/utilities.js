@@ -83,7 +83,7 @@ const newTicketHandler = event => {
 
 const displayTicket = (ticketObj) => {
         console.log(ticketObj);
-        let {ticket_id, firstname, lastname, email, phone, totalPrice, brand, model, color, size, due_date, description} = ticketObj;
+        let {ticket_id, firstname, lastname, email, phone, total_price, brand, model, color, size, due_date, description} = ticketObj;
         
         due_date = due_date.slice(0,10)
 
@@ -92,7 +92,7 @@ const displayTicket = (ticketObj) => {
         document.getElementById('viewName').textContent = `${firstname} ${lastname}`
         document.getElementById('viewPhone').textContent = phone
         document.getElementById('viewEmail').textContent = email
-        document.getElementById('viewPrice').textContent = `$ ${totalPrice}`
+        document.getElementById('viewPrice').textContent = `$ ${total_price}`
         document.getElementById('viewBrand').textContent = brand
         document.getElementById('viewModel').textContent = model
         document.getElementById('viewColor').textContent = color
@@ -343,7 +343,7 @@ const editTicketFormHandler = event => {
 
 const displayEditTicket = (ticketObj) => {
     console.log(ticketObj);
-    const {firstname, lastname, email, phone, totalPrice, brand, model, color, size} = ticketObj;
+    const {firstname, lastname, email, phone, total_price, brand, model, color, size} = ticketObj;
     let ticketInfo = document.getElementById('newTicket');
     ticketInfo.innerHTML = `
         <section class="newTicketForm ticketInputs" id="clientForm">
@@ -355,7 +355,7 @@ const displayEditTicket = (ticketObj) => {
             <label for="viewEmail">Email:</label>
             <h4 id="viewEmail" name="viewEmail">${email}</h4>
             <label class="ticket-left" for="viewPrice">Ticket Cost:</label>
-            <h4 class="ticket-right" id="viewPrice" name="viewPrice">${totalPrice}</h4>
+            <h4 class="ticket-right" id="viewPrice" name="viewPrice">${total_price}</h4>
         </section>
         <section class="newTicketForm ticketInputs" id="bikeForm">
             <h3>Bike Information</h3>
