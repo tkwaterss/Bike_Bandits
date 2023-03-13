@@ -25,12 +25,13 @@
     <main>
         <div>
             <button class="viewBtns" id="editTicketBtn">EDIT</button>
-            <button class="viewBtns toggleHide" id="ticketDeleteBtn">DELETE</button>
+            <button class="viewBtns" id="ticketDeleteBtn">DELETE</button>
+            <button class="viewBtns" id="createTicketBtn">CREATE TICKET</button>
         </div>
         <div class="hide" id="confirmDeleteDiv">
             <p>Are you sure you want to permanantly delete this Ticket?</p>
             <button class="viewBtns" id="confirmDeleteBtn">CONFIRM</button>
-            <button class="viewBtns toggleHide" id="nevermindBtn">NEVERMIND</button>
+            <button class="viewBtns" id="nevermindBtn">NEVERMIND</button>
         </div>
         <div id="ticketHeader">
             <h2>Ticket #: </h2>
@@ -70,33 +71,43 @@
             </section>
             <section id="searchForItems">
                 <!-- the two sets of fields will be toggled by the Create new item button -->
-                <label for="itemSearch">Search for work items:</label>
-                <input type="text" id="searchInput">
-                <label for="newItemInput" class="hide">New Item Description:</label>
-                <input type="text"  class="hide"id="newItemInput" name="newItemInput" placeholder="Install New Chain">
-                <label for="newItemPrice" class="hide">New Item Price:</label>
-                <input type="text"  class="hide"id="newItemPrice" name="newItemPrice" placeholder="20.00">
-                <input type="submit">
-                <button>Create New Item</button>
+                <div id="searchItemDiv">
+                    <label for="itemSearch">Search for work items:</label>
+                    <input type="text" id="searchInput">
+                    <button id="showAddItem">Create New Item</button>
+                </div>
+                <div class="hide" id="newItemDiv">
+                    <label for="newItemInput">New Item Description:</label>
+                    <input type="text" id="newItemInput" name="newItemInput" placeholder="Install New Chain"><br>
+                    <label for="newItemPrice">New Item Price:</label>
+                    <input type="text" id="newItemPrice" name="newItemPrice" placeholder="20.00"><br>
+                    <button id="cancelAddItem">CANCEL</button>
+                </div>
+                <div>
+                    <input type="submit" class="submit" id="addItemSubmit">
+                </div>
             </section>
         </form>
 
-        <section class="">
-            <div id="itemTableHeader" class="ticketDiv">
-                <p>Description</p>
-                <p>Price</p>
+        
+        <div id="itemTableHeader" class="itemHeader itemDiv">
+            <div class="itemInfoDiv">
+                <h4>Description</h4>
+                <h4>Price</h4>
             </div>
-        </section>
-        <section class="" id="itemsContainer">
+        </div>
+        <section id="itemsContainer">
                        
         </section>
-        <section class="" id="searchItemsContainer">
+        <div id="searchDivider" class="hide"></div>
+        <section id="searchItemsContainer">
 
         </section>
     </main>
 
     <section id="ticketDisplay">
         <form class="viewTicketSearch">
+            <p>Ticket Search:</p>
             <input id="viewSearchInput" type="text" placeholder="name">
             <select id="sideStatus">
                 <option value="All Tickets" selected>All Tickets</option>
@@ -105,7 +116,7 @@
                 <option value="Complete and Notified">Complete and Notified</option>
                 <option value="Paid for and Picked Up">Paid and Picked Up</option>
             </select>
-            <input type="submit">
+            <input type="submit" class="submit">
         </form>
         <section id="sideTicketContainer">
             <div class="viewTicketContainer">
@@ -118,7 +129,7 @@
         </section>
     </section>
 
-    <footer>
+    <!-- <footer>
         <div>
             <h4>Bike Bandits</h4>
             <ul>
@@ -138,7 +149,7 @@
             <img src="./images/mikkel-bech-yjAFnkLtKY0-unsplash.jpg">
             <img src="./images/robert-bye-tG36rvCeqng-unsplash.jpg">
         </div>
-    </footer>
+    </footer> -->
 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="utilities.js"></script>

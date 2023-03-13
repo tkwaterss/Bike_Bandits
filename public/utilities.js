@@ -99,6 +99,7 @@ const displayTicket = (ticketObj) => {
         document.getElementById('viewDescription').value = description
         document.getElementById('viewDueDate').value = due_date
 
+        getTicketItems(ticket_id);
         getTickets();
 }
 
@@ -151,17 +152,20 @@ const displayItems = itemsArray => {
     itemsArray.forEach(itemObj => {
         const {ticket_item_id, item_id, title, price} = itemObj
         let newItem = document.createElement('div');
-        newItem.classList.add('ticketDiv')
-        newItem.classList.add('ticketContainer')
+        newItem.classList.add('itemDiv')
+        newItem.classList.add('itemContainer')
 
         let deleteBtn = document.createElement('button')
         deleteBtn.textContent = 'X'
         deleteBtn.setAttribute('id',`${ticket_item_id}`)
+        deleteBtn.classList.add('itemBtn')
         deleteBtn.addEventListener('click', deleteItemHandler)
 
         newItem.innerHTML = `
+        <div class="itemInfoDiv">
             <p>${title}</p>
             <h4>$${price}.00</h4>
+        </div>
         `
         newItem.appendChild(deleteBtn)
         itemsContainer.appendChild(newItem);
@@ -221,21 +225,25 @@ const ticketItemsFormHandler = event => {
 
 const displaySearchItems = itemsArray => {
     searchItemsContainer.innerHTML = '';
-    console.log('This is the displaySearchItems function', itemsArray)
+    let searchDivider = document.getElementById('searchDivider');
+    searchDivider.classList.remove('hide');
     itemsArray.forEach(itemObj => {
         const {item_id, title, price} = itemObj
         let newItem = document.createElement('div');
-        newItem.classList.add('ticketDiv')
-        newItem.classList.add('ticketContainer')
+        newItem.classList.add('itemDiv')
+        newItem.classList.add('itemContainer')
 
         let addBtn = document.createElement('button')
         addBtn.textContent = 'Add To Ticket'
         addBtn.setAttribute('id',`${item_id}`)
+        addBtn.classList.add('itemBtn')
         addBtn.addEventListener('click', addItemHandler)
 
         newItem.innerHTML = `
+        <div class="itemInfoDiv">
             <p>${title}</p>
             <h4>$${price}.00</h4>
+        </div>
         `
         newItem.appendChild(addBtn)
         searchItemsContainer.appendChild(newItem);
@@ -245,6 +253,8 @@ const displaySearchItems = itemsArray => {
 const addItemHandler = event => {
     let targetId = +(event.target.id)
     let ticketId = +(document.getElementById('viewTicketId').textContent)
+    let searchDivider = document.getElementById('searchDivider');
+    searchDivider.classList.remove('hide');
     console.log(targetId, ticketId)
     addTicketItem(targetId, ticketId)
     searchItemsContainer.innerHTML = ''
@@ -359,15 +369,24 @@ const displayEditTicket = (ticketObj) => {
 }
 
 const toggleDelete = event => {
-    console.log('woooooooo')
     let deleteDiv = document.getElementById('confirmDeleteDiv')
-    let deleteBtn = document.getElementById('ticketDeleteBtn')
-    console.log(event.target.id)
     if(event.target.id === "ticketDeleteBtn") {
-        deleteBtn.classList.add('hide')
+        toggleDeleteBtn.classList.add('hide')
         deleteDiv.classList.remove('hide')
     } else {
+        toggleDeleteBtn.classList.remove('hide')
         deleteDiv.classList.add('hide')
-        deleteBtn.classList.remove('hide')
+    }
+}
+
+const toggleAddItem = event => {
+    let addItemDiv = document.getElementById('newItemDiv');
+    let searchItemDiv = document.getElementById('searchItemDiv');
+    if(event.target.id === 'showAddItem') {
+        searchItemDiv.classList.add('hide')
+        addItemDiv.classList.remove('hide')
+    } else {
+        searchItemDiv.classList.remove('hide')
+        addItemDiv.classList.add('hide')
     }
 }

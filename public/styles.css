@@ -75,7 +75,8 @@ a:active {
 /* Main Body Styling */
 main {
     padding: 2.5vw;
-    width: 70vw;
+    width: 69vw;
+    min-width: 600px;
 }
 #newTicket {
     display: flex;
@@ -113,21 +114,38 @@ main {
 }
 #searchForItems {
     display: flex;
+    flex-direction: column;
     justify-content: space-evenly;
+    align-items: center;
     flex-wrap: wrap;
     width: 75%;
     padding: 20px;
+}
+#addItemSubmit {
+    margin-top: 20px;
 }
 #viewDescription {
     width: 100%;
 }
 button {
     background-color: rgb(175, 114, 0);
-    padding: 5px;
+    padding: 5px 15px;
     border: none;
     font-weight: bolder;
+    border-radius: 7px;
 }
 button:hover {
+    background-color: rgb(255, 177, 81);
+}
+.submit {
+    background-color: rgb(175, 114, 0);
+    padding: 5px 15px;
+    border: none;
+    font-weight: bolder;
+    height:25px;
+    border-radius: 7px;
+}
+.submit:hover {
     background-color: rgb(255, 177, 81);
 }
 .hide {
@@ -154,16 +172,52 @@ button:hover {
     list-style-type: none;
     align-items: center;
 }
+.itemContainer {
+    border: 2px Solid grey;
+    border-radius: 10px;
+    margin: 5px 50px;
+}
+.itemHeader {
+    border-bottom: solid;
+    margin: 5px 50px;
+}
+.itemDiv {
+    display:flex;
+    justify-content: space-between;
+    padding: 5px;
+    align-items: center;
+}
+.itemInfoDiv {
+    width: 75%;
+    display:flex;
+    justify-content: space-between;
+}
+#searchDivider {
+    border-bottom: solid 5px;
+    margin: 15px 50px;
+}
 li {
     padding: 0 20px;
 }
+
+/* Ticket Display Container */
 #ticketDisplay {
-    width: 23vw;
-    border: solid;
+    width: 280px;
+    min-width: 280px;
+}
+.viewTicketSearch {
+    display: flex;
+    padding: 10px;
+    margin-top: 10px;
+    flex-direction: column;
+    border: solid 2px grey;
+}
+#sideStatus {
+    margin: 10px 0;
 }
 .viewTicketContainer {
     padding: 10px;
-    margin: 10px;
+    margin: 10px 0;
     border: solid 2px grey;
 }
 .left {
