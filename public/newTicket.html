@@ -46,15 +46,15 @@
                 <label for="size">Size:</label>
                 <input type="text" id="size" name="size" placeholder="Large" required>
             </section>
-            <!-- there may be an issue with resizing the box(wrap undoes) -->
-            <section class="newTicketForm">
-                <label for="description">Repair Description:</label>
-                <textarea name="description" id="description" cols="80" rows="10"></textarea>
-                <label for="dueDate">Due Date:</label>
-                <input type="date" id="dueDate" name="dueDate" required>
+            <section id="ticketInfo">
+                <label for="viewDescription">Repair Description:</label><br>
+                <textarea name="viewDescription" id="viewDescription" rows="10"></textarea><br>
+                <label for="viewDueDate">Due Date:</label>
+                <input type="date" id="viewDueDate" name="viewDueDate" required>
             </section>
-            
-            <input type="submit" id="newTicketSubmit" class="submit">
+            <div id="newTicketSubmit">
+                <input type="submit" id="newTicketSubmit" class="submit">
+            </div>
         </form>
 
         <section class="newTicketForm" id="items">

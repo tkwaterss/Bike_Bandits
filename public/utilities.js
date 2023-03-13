@@ -9,49 +9,49 @@ const formatItems = string => {
     return string.toUpperCase()
 }
 
-const displayTickets = (ticketArr) => {
-    main.innerHTML = ''
-    console.log(ticketArr);
-    ticketArr.forEach(ticketObj => {
-        const {firstname, lastname, phone, brand, model, due_date, price, ticket_id, status} = ticketObj;
-        let newTicket = document.createElement('div')
-        newTicket.classList.add('ticketDiv')
-        newTicket.classList.add('ticketContainer')
-        let newButton = document.createElement('button')
-        let newName = document.createElement('h4')
-        newButton.textContent = ticket_id
-        newName.textContent = `${firstname} ${lastname}`
-        // newButton.addEventListener('click', homeClickHandler)
-        newTicket.appendChild(newButton)
-        newTicket.appendChild(newName)
+// const displayTickets = (ticketArr) => {
+//     main.innerHTML = ''
+//     console.log(ticketArr);
+//     ticketArr.forEach(ticketObj => {
+//         const {firstname, lastname, phone, brand, model, due_date, price, ticket_id, status} = ticketObj;
+//         let newTicket = document.createElement('div')
+//         newTicket.classList.add('ticketDiv')
+//         newTicket.classList.add('ticketContainer')
+//         let newButton = document.createElement('button')
+//         let newName = document.createElement('h4')
+//         newButton.textContent = ticket_id
+//         newName.textContent = `${firstname} ${lastname}`
+//         // newButton.addEventListener('click', homeClickHandler)
+//         newTicket.appendChild(newButton)
+//         newTicket.appendChild(newName)
 
-        let newList = document.createElement('ul')
-        newList.classList.add('ticketDiv')
-        newList.innerHTML = `
-            <li>${phone}</li>
-            <li>${brand}</li>
-            <li>${model}</li>
-            <li>${due_date}</li>
-            <li>${status}</li>
-            <li>$${price}.00</li>
-        `
-        newTicket.appendChild(newList)
-        main.appendChild(newTicket);
-    })
-}
+//         let newList = document.createElement('ul')
+//         newList.classList.add('ticketDiv')
+//         newList.innerHTML = `
+//             <li>${phone}</li>
+//             <li>${brand}</li>
+//             <li>${model}</li>
+//             <li>${due_date}</li>
+//             <li>${status}</li>
+//             <li>$${price}.00</li>
+//         `
+//         newTicket.appendChild(newList)
+//         main.appendChild(newTicket);
+//     })
+// }
 
-const searchHandler = event => {
-    event.preventDefault();
-    let searchValue = document.getElementById('searchInput').value;
-    let searchStatus = document.querySelector('select').value;
+// const searchHandler = event => {
+//     event.preventDefault();
+//     let searchValue = document.getElementById('searchInput').value;
+//     let searchStatus = document.querySelector('select').value;
 
-    searchValue = formatInput(searchValue)
+//     searchValue = formatInput(searchValue)
 
-    console.log(searchValue)
-    searchTickets(searchValue, searchStatus)
+//     console.log(searchValue)
+//     searchTickets(searchValue, searchStatus)
     
-    ticketSearch.reset();
-}
+//     ticketSearch.reset();
+// }
 
 const newTicketHandler = event => {
     event.preventDefault();
@@ -65,8 +65,8 @@ const newTicketHandler = event => {
         model: document.getElementById('model').value,
         color: document.getElementById('color').value,
         size: document.getElementById('size').value,
-        description: document.getElementById('description').value,
-        dueDate: document.getElementById('dueDate').value
+        description: document.getElementById('viewDescription').value,
+        dueDate: document.getElementById('viewDueDate').value
     }
 
     newTicketData.firstname = formatInput(newTicketData.firstname);
@@ -83,7 +83,7 @@ const newTicketHandler = event => {
 
 const displayTicket = (ticketObj) => {
         console.log(ticketObj);
-        let {ticket_id, firstname, lastname, email, phone, brand, model, color, size, due_date, description} = ticketObj;
+        let {ticket_id, firstname, lastname, email, phone, totalPrice, brand, model, color, size, due_date, description} = ticketObj;
         
         due_date = due_date.slice(0,10)
 
@@ -92,6 +92,7 @@ const displayTicket = (ticketObj) => {
         document.getElementById('viewName').textContent = `${firstname} ${lastname}`
         document.getElementById('viewPhone').textContent = phone
         document.getElementById('viewEmail').textContent = email
+        document.getElementById('viewPrice').textContent = `$ ${totalPrice}`
         document.getElementById('viewBrand').textContent = brand
         document.getElementById('viewModel').textContent = model
         document.getElementById('viewColor').textContent = color
@@ -308,7 +309,7 @@ const editTicketHandler = event => {
             <label for="size">Size:</label>
             <input value="${size}" type="text" id="size" name="size" placeholder="Large" required>
         </section>
-        <input type="submit" id="newTicketSubmit" >
+        <input type="submit" id="newTicketSubmit" class="submit">
     `
     editForm.addEventListener('submit', editTicketFormHandler)
     ticketInfo.innerHTML = ''
@@ -342,7 +343,7 @@ const editTicketFormHandler = event => {
 
 const displayEditTicket = (ticketObj) => {
     console.log(ticketObj);
-    const {firstname, lastname, email, phone, brand, model, color, size} = ticketObj;
+    const {firstname, lastname, email, phone, totalPrice, brand, model, color, size} = ticketObj;
     let ticketInfo = document.getElementById('newTicket');
     ticketInfo.innerHTML = `
         <section class="newTicketForm ticketInputs" id="clientForm">
@@ -353,6 +354,8 @@ const displayEditTicket = (ticketObj) => {
             <h4 id="viewPhone" name="viewPhone">${phone}</h4>
             <label for="viewEmail">Email:</label>
             <h4 id="viewEmail" name="viewEmail">${email}</h4>
+            <label class="ticket-left" for="viewPrice">Ticket Cost:</label>
+            <h4 class="ticket-right" id="viewPrice" name="viewPrice">${totalPrice}</h4>
         </section>
         <section class="newTicketForm ticketInputs" id="bikeForm">
             <h3>Bike Information</h3>

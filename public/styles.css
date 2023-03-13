@@ -5,7 +5,7 @@ body {
     background-color: antiquewhite;
     display:flex;
     flex-wrap: wrap;
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 /* Header Styling */
@@ -84,6 +84,15 @@ main {
     flex-wrap: wrap;
     justify-content: space-evenly;
 }
+#editTicket {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    margin-bottom: 20px;
+}
+#newTicketSubmit {
+    margin: 0 150px;
+}
 #headerBtns {
     display:flex;
     justify-content: space-between;
@@ -157,7 +166,6 @@ button:hover {
 .hide {
     display: none;
 }
-
 .ticketSearch {
     text-align: center;
     padding: 20px;
@@ -210,6 +218,7 @@ li {
 #ticketDisplay {
     width: 280px;
     min-width: 280px;
+    margin-right: 20px;
 }
 .viewTicketSearch {
     display: flex;
