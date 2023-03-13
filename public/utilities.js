@@ -262,8 +262,9 @@ const addItemHandler = event => {
 
 const ticketDeleteHandler = event => {
     let targetId = +(document.getElementById('viewTicketId').textContent);
+    toggleDelete(event)
+
     deleteTicket(targetId);
-    console.log(targetId)
 }
 
 const editTicketHandler = event => {

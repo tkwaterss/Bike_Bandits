@@ -15,18 +15,16 @@
         </div>
         <nav id="navbar">
             <ol id="nav-links">
-                <li class="links"><a href="./home.html">Home</a></li>
+                <li class="links"><a href="./ticketView.html">Home</a></li>
                 <li class="links"><a href="./newTicket.html">New Ticket</a></li>
-                <li class="links"><a href="./ticketView.html">Ticket View</a></li>
             </ol>
         </nav>
     
     </header>
     <main>
-        <div>
-            <button class="viewBtns" id="editTicketBtn">EDIT</button>
-            <button class="viewBtns" id="ticketDeleteBtn">DELETE</button>
-            <button class="viewBtns" id="createTicketBtn">CREATE TICKET</button>
+        <div id="headerBtns">
+            <button class="viewBtns" id="editTicketBtn">EDIT TICKET</button>
+            <button class="viewBtns" id="ticketDeleteBtn">DELETE TICKET</button>
         </div>
         <div class="hide" id="confirmDeleteDiv">
             <p>Are you sure you want to permanantly delete this Ticket?</p>
@@ -48,6 +46,8 @@
                 <h4 class="ticket-right" id="viewPhone" name="viewPhone"></h4>
                 <label class="ticket-left" for="viewEmail">Email:</label>
                 <h4 class="ticket-right" id="viewEmail" name="viewEmail"></h4>
+                <label class="ticket-left" for="viewPrice">Ticket Cost:</label>
+                <h4 class="ticket-right" id="viewPrice" name="viewPrice"></h4>
             </section>
             <section class="ticketInputs" id="bikeForm">
                 <h3>Bike Information</h3>

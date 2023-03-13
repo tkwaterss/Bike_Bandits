@@ -77,11 +77,17 @@ main {
     padding: 2.5vw;
     width: 69vw;
     min-width: 600px;
+    margin: 0 auto;
 }
 #newTicket {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
+}
+#headerBtns {
+    display:flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
 }
 .ticketInputs {
     display: flex;
