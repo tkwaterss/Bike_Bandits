@@ -13,51 +13,6 @@ const formatDescription = string => {
     return string.replaceAll("'", "''");
 }
 
-
-// const displayTickets = (ticketArr) => {
-//     main.innerHTML = ''
-//     console.log(ticketArr);
-//     ticketArr.forEach(ticketObj => {
-//         const {firstname, lastname, phone, brand, model, due_date, price, ticket_id, status} = ticketObj;
-//         let newTicket = document.createElement('div')
-//         newTicket.classList.add('ticketDiv')
-//         newTicket.classList.add('ticketContainer')
-//         let newButton = document.createElement('button')
-//         let newName = document.createElement('h4')
-//         newButton.textContent = ticket_id
-//         newName.textContent = `${firstname} ${lastname}`
-//         // newButton.addEventListener('click', homeClickHandler)
-//         newTicket.appendChild(newButton)
-//         newTicket.appendChild(newName)
-
-//         let newList = document.createElement('ul')
-//         newList.classList.add('ticketDiv')
-//         newList.innerHTML = `
-//             <li>${phone}</li>
-//             <li>${brand}</li>
-//             <li>${model}</li>
-//             <li>${due_date}</li>
-//             <li>${status}</li>
-//             <li>$${price}.00</li>
-//         `
-//         newTicket.appendChild(newList)
-//         main.appendChild(newTicket);
-//     })
-// }
-
-// const searchHandler = event => {
-//     event.preventDefault();
-//     let searchValue = document.getElementById('searchInput').value;
-//     let searchStatus = document.querySelector('select').value;
-
-//     searchValue = formatInput(searchValue)
-
-//     console.log(searchValue)
-//     searchTickets(searchValue, searchStatus)
-    
-//     ticketSearch.reset();
-// }
-
 const newTicketHandler = event => {
     event.preventDefault();
 
@@ -87,9 +42,18 @@ const newTicketHandler = event => {
     newTicket.reset();
 }
 
-const displayTicket = (ticketObj) => {
-        console.log(ticketObj);
-        let {ticket_id, firstname, lastname, email, phone, total_price, brand, model, color, size, due_date, description} = ticketObj;
+const displayTicket = (ticketArr) => {
+        // console.log(ticketArr);
+        let {ticket_id, firstname, lastname, email, phone, brand, model, color, size, due_date, description} = ticketArr[0];
+        let {total_price} = ticketArr[1];
+
+        if(total_price) {
+            console.log(total_price)
+            document.getElementById('viewPrice').textContent = `$ ${total_price}.00`
+        } else {
+            document.getElementById('viewPrice').textContent = `$ 0.00`
+            console.log('does not exist')
+        }
         
         due_date = due_date.slice(0,10)
 
@@ -98,7 +62,6 @@ const displayTicket = (ticketObj) => {
         document.getElementById('viewName').textContent = `${firstname} ${lastname}`
         document.getElementById('viewPhone').textContent = phone
         document.getElementById('viewEmail').textContent = email
-        // document.getElementById('viewPrice').textContent = `$ ${total_price}`
         document.getElementById('viewBrand').textContent = brand
         document.getElementById('viewModel').textContent = model
         document.getElementById('viewColor').textContent = color
@@ -261,7 +224,7 @@ const addItemHandler = event => {
     let targetId = +(event.target.id)
     let ticketId = +(document.getElementById('viewTicketId').textContent)
     let searchDivider = document.getElementById('searchDivider');
-    searchDivider.classList.remove('hide');
+    searchDivider.classList.add('hide');
     console.log(targetId, ticketId)
     addTicketItem(targetId, ticketId)
     searchItemsContainer.innerHTML = ''
@@ -347,9 +310,16 @@ const editTicketFormHandler = event => {
     editTicket(newTicketData, targetId);
 }
 
-const displayEditTicket = (ticketObj) => {
-    console.log(ticketObj);
-    const {firstname, lastname, email, phone, total_price, brand, model, color, size} = ticketObj;
+const displayEditTicket = (ticketArr) => {
+    console.log(ticketArr);
+    const {firstname, lastname, email, phone, brand, model, color, size} = ticketArr[0];
+    
+    let {total_price} = ticketArr[1]
+
+    if(total_price === null) {
+        let total_price = '$ 0.00'
+    }
+
     let ticketInfo = document.getElementById('newTicket');
     ticketInfo.innerHTML = `
         <section class="newTicketForm ticketInputs" id="clientForm">
@@ -360,8 +330,8 @@ const displayEditTicket = (ticketObj) => {
             <h4 id="viewPhone" name="viewPhone">${phone}</h4>
             <label for="viewEmail">Email:</label>
             <h4 id="viewEmail" name="viewEmail">${email}</h4>
-           <!-- <label class="ticket-left" for="viewPrice">Ticket Cost:</label>
-            <h4 class="ticket-right" id="viewPrice" name="viewPrice">${total_price}</h4> -->
+            <label class="ticket-left" for="viewPrice">Ticket Cost:</label>
+            <h4 class="ticket-right" id="viewPrice" name="viewPrice">$ ${total_price}.00</h4>
         </section>
         <section class="newTicketForm ticketInputs" id="bikeForm">
             <h3>Bike Information</h3>

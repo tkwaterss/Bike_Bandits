@@ -1,12 +1,12 @@
-const main = document.querySelector('main');
-const ticketSearch = document.querySelector('.ticketSearch');
+// const main = document.querySelector('main');
+// const ticketSearch = document.querySelector('.ticketSearch');
 
-const errCallback = err => console.log(err);
-const ticketsCallback = ({ data : ticketArr }) => displayTickets(ticketArr);
+// const errCallback = err => console.log(err);
+// const ticketsCallback = ({ data : ticketArr }) => displayTickets(ticketArr);
 
-const getTickets = () => axios.get('/api/home').then(ticketsCallback).catch(errCallback);
-const searchTickets = (searchValue, searchStatus) => axios.get(`/api/home/search?value=${searchValue}&status=${searchStatus}`).then(ticketsCallback).catch(errCallback);
+// const getTickets = () => axios.get('/api/home').then(ticketsCallback).catch(errCallback);
+// const searchTickets = (searchValue, searchStatus) => axios.get(`/api/home/search?value=${searchValue}&status=${searchStatus}`).then(ticketsCallback).catch(errCallback);
 
-getTickets();
+// getTickets();
 
-ticketSearch.addEventListener('submit', searchHandler);
+// ticketSearch.addEventListener('submit', searchHandler);

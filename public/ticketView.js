@@ -15,7 +15,7 @@ const cancelAddItemBtn = document.getElementById('cancelAddItem');
 
 const errCallback = err => console.log(err);
 const ticketsCallback = ({ data : ticketArr }) => displaySideTickets(ticketArr);
-const mainTicketCallback = ({ data : ticketObj }) => displayTicket(ticketObj);
+const mainTicketCallback = ({ data : ticketArr }) => displayTicket(ticketArr);
 const itemsCallback = ({data : itemsArray }) => displayItems(itemsArray);
 const searchItemsCallback = ({ data : itemsArray }) => displaySearchItems(itemsArray);
 const editTicketCallback = ({ data : ticketObj }) => displayEditTicket(ticketObj);
