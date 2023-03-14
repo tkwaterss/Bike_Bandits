@@ -10,7 +10,6 @@ app.use(express.static('public'))
 
 const {
     loadPage,
-    getTickets,
     searchTickets,
     addNewTicket,
     getRecentTicket,
@@ -27,8 +26,6 @@ const {
 } = require('./controller');
 
 app.get('/', loadPage)
-app.get('/api/home', getTickets)
-app.get('/api/home/search', searchTickets)
 app.post('/api/ticket', addNewTicket)
 app.get('/api/ticket', getRecentTicket)
 app.get('/api/sideBar', getSideTickets)

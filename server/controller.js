@@ -17,23 +17,6 @@ module.exports = {
 loadPage: (req, res) => {
     res.status(200).sendFile(path.join(__dirname, '../public/ticketView.html'))
 },
-
-getTickets: (req, res) => {
-    sequelize.query(`
-        SELECT c.firstname, c.lastname, c.phone, b.brand, b.model, t.due_date, t.ticket_id, s.status
-        FROM tickets AS t
-            JOIN clients AS c
-            ON t.client_id = c.client_id
-            JOIN bikes AS b
-            ON c.client_id = b.client_id
-            JOIN statuses AS s
-            ON t.status_id = s.status_id
-        GROUP BY t.ticket_id, c.firstname, c.lastname, c.phone, b.brand, b.model, s.status
-        ORDER BY t.due_date
-        LIMIT 10;
-    `).then(dbRes => res.status(200).send(dbRes[0]))
-    .catch(err => console.log(err))
-},
 searchTickets: (req, res) => {
     let {value, status} = req.query;
     let queryStatus = `AND s.status LIKE '%${status}%'`

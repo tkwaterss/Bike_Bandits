@@ -43,16 +43,13 @@ const newTicketHandler = event => {
 }
 
 const displayTicket = (ticketArr) => {
-        // console.log(ticketArr);
         let {ticket_id, firstname, lastname, email, phone, brand, model, color, size, due_date, description} = ticketArr[0];
         let {total_price} = ticketArr[1];
 
         if(total_price) {
-            console.log(total_price)
             document.getElementById('viewPrice').textContent = `$ ${total_price}.00`
         } else {
             document.getElementById('viewPrice').textContent = `$ 0.00`
-            console.log('does not exist')
         }
         
         due_date = due_date.slice(0,10)
@@ -75,7 +72,6 @@ const displayTicket = (ticketArr) => {
 
 const displaySideTickets = (ticketArr) => {
     ticketContainer.innerHTML = ''
-    console.log(ticketArr);
     ticketArr.forEach(ticketObj => {
         let {firstname, lastname, phone, due_date, ticket_id, status} = ticketObj;
         let newTicket = document.createElement('div')
@@ -101,10 +97,8 @@ const sideSearchHandler = event => {
     event.preventDefault();
     let searchValue = document.getElementById('viewSearchInput').value;
     let searchStatus = document.getElementById('sideStatus').value;
-
     searchValue = formatInput(searchValue)
 
-    console.log(searchValue)
     searchSideTickets(searchValue, searchStatus)
     
     viewTicketSearch.reset();
@@ -118,7 +112,6 @@ const sideClickHandler = event => {
 
 const displayItems = itemsArray => {
     itemsContainer.innerHTML = '';
-    console.log('This is the displayItems function', itemsArray)
     itemsArray.forEach(itemObj => {
         const {ticket_item_id, item_id, title, price} = itemObj
         let newItem = document.createElement('div');
@@ -156,8 +149,6 @@ const ticketItemsFormHandler = event => {
     let newItemInput = formatItems(document.getElementById('newItemInput').value);
     let newItemPrice = +(document.getElementById('newItemPrice').value);
     let ticketId = +(document.getElementById('viewTicketId').textContent)
-
-    console.log(dueDate)
 
     if (searchInput) {
         let ticketData = {
@@ -225,7 +216,7 @@ const addItemHandler = event => {
     let ticketId = +(document.getElementById('viewTicketId').textContent)
     let searchDivider = document.getElementById('searchDivider');
     searchDivider.classList.add('hide');
-    console.log(targetId, ticketId)
+
     addTicketItem(targetId, ticketId)
     searchItemsContainer.innerHTML = ''
 }
@@ -311,7 +302,6 @@ const editTicketFormHandler = event => {
 }
 
 const displayEditTicket = (ticketArr) => {
-    console.log(ticketArr);
     const {firstname, lastname, email, phone, brand, model, color, size} = ticketArr[0];
     
     let {total_price} = ticketArr[1]
