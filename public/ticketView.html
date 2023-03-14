@@ -66,8 +66,21 @@
             <section id="ticketInfo">
                 <label for="viewDescription">Repair Description:</label><br>
                 <textarea name="viewDescription" id="viewDescription" rows="10"></textarea><br>
-                <label for="viewDueDate">Due Date:</label>
-                <input type="date" id="viewDueDate" name="viewDueDate" required>
+                <div id="date-status-div">
+                    <div>
+                        <label for="viewDueDate">Due Date:</label>
+                        <input type="date" id="viewDueDate" name="viewDueDate" required>
+                    </div>
+                    <div>
+                        <label for="viewStatus">Ticket Status:</label>
+                        <select id="viewStatus" name="viewStatus" required>
+                            <option value="Checked In">Checked In</option>
+                            <option value="In Progress">In Progress</option>
+                            <option value="Work Complete">Work Complete</option>
+                            <option value="Paid in Full">Paid in Full</option>
+                        </select>
+                    </div>
+                </div>
             </section>
             <section id="searchForItems">
                 <div id="searchItemDiv">
@@ -112,8 +125,8 @@
                 <option value="All Tickets" selected>All Tickets</option>
                 <option value="Checked In">Checked In</option>
                 <option value="In Progress">In Progress</option>
-                <option value="Complete and Notified">Complete and Notified</option>
-                <option value="Paid for and Picked Up">Paid and Picked Up</option>
+                <option value="Work Complete">Work Complete</option>
+                <option value="Paid in Full ">Paid in Full</option>
             </select>
             <input type="submit" class="submit">
         </form>

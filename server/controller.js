@@ -110,8 +110,10 @@ addNewTicket: (req, res) => {
 },
 getRecentTicket: (req, res) => {
     sequelize.query(`
-    SELECT t.ticket_id, c.firstname, c.lastname, c.phone, c.email, b.brand, b.model, b.color, b.size, t.due_date, t.description
+    SELECT t.ticket_id, s.status, c.firstname, c.lastname, c.phone, c.email, b.brand, b.model, b.color, b.size, t.due_date, t.description
     FROM tickets AS t
+        JOIN statuses AS s
+        ON t.status_id = s.status_id
         JOIN clients AS c
         ON t.client_id = c.client_id
         JOIN bikes AS b
@@ -120,7 +122,7 @@ getRecentTicket: (req, res) => {
         SELECT MAX(ticket_id) AS ticket_id
         FROM tickets
         )
-    GROUP BY t.ticket_id, c.firstname, c.lastname, c.phone, c.email, b.brand, b.model, b.color, b.size, t.due_date, t.description;
+    GROUP BY t.ticket_id, s.status, c.firstname, c.lastname, c.phone, c.email, b.brand, b.model, b.color, b.size, t.due_date, t.description;
 
     SELECT SUM(i.price) AS total_price
     FROM tickets AS t
@@ -155,14 +157,16 @@ getSideTickets: (req, res) => {
 getTicketById: (req, res) => {
     const {ticketId} = req.query
     sequelize.query(`
-    SELECT t.ticket_id, c.firstname, c.lastname, c.phone, c.email, b.brand, b.model, b.color, b.size, t.due_date, t.description
+    SELECT t.ticket_id, s.status, c.firstname, c.lastname, c.phone, c.email, b.brand, b.model, b.color, b.size, t.due_date, t.description
     FROM tickets AS t
+        JOIN statuses AS s
+        ON t.status_id = s.status_id
         JOIN clients AS c
         ON t.client_id = c.client_id
         JOIN bikes AS b
         ON c.client_id = b.client_id
         WHERE t.ticket_id = ${ticketId}
-    GROUP BY t.ticket_id, c.firstname, c.lastname, c.phone, c.email, b.brand, b.model, b.color, b.size, t.due_date, t.description;
+    GROUP BY t.ticket_id, s.status, c.firstname, c.lastname, c.phone, c.email, b.brand, b.model, b.color, b.size, t.due_date, t.description;
 
     SELECT SUM(i.price) AS total_price
     FROM tickets AS t
@@ -208,7 +212,18 @@ deleteTicketItem: (req, res) => {
     }).catch(err=> console.log(err))
 },
 updateTicket: (req, res) => {
-    const {ticketId, description, dueDate} = req.body
+    const {ticketId, description, dueDate, status} = req.body
+    let status_id
+    if (status === 'Checked In') {
+        status_id = 1;
+    } else if (status === 'In Progress') {
+        status_id = 2;
+    } else if (status === 'Work Complete') {
+        status_id = 3;
+    } else if (status === 'Paid in Full') {
+        status_id = 4;
+    }
+
     sequelize.query(`
         UPDATE tickets
         SET description = '${description}' 
@@ -217,15 +232,21 @@ updateTicket: (req, res) => {
         UPDATE tickets
         SET due_date = '${dueDate}'
         WHERE ticket_id = ${ticketId};
+
+        UPDATE tickets
+        SET status_id = ${status_id}
+        WHERE ticket_id = ${ticketId};
         
-        SELECT t.ticket_id, c.firstname, c.lastname, c.phone, c.email, b.brand, b.model, b.color, b.size, t.due_date, t.description
+        SELECT t.ticket_id, s.status, c.firstname, c.lastname, c.phone, c.email, b.brand, b.model, b.color, b.size, t.due_date, t.description
         FROM tickets AS t
+            JOIN statuses AS s
+            ON t.status_id = s.status_id
             JOIN clients AS c
             ON t.client_id = c.client_id
             JOIN bikes AS b
             ON c.client_id = b.client_id
             WHERE t.ticket_id = ${ticketId}
-        GROUP BY t.ticket_id, c.firstname, c.lastname, c.phone, c.email, b.brand, b.model, b.color, b.size, t.due_date, t.description;
+        GROUP BY t.ticket_id, s.status, c.firstname, c.lastname, c.phone, c.email, b.brand, b.model, b.color, b.size, t.due_date, t.description;
 
         SELECT SUM(i.price) AS total_price
         FROM tickets AS t
@@ -300,8 +321,10 @@ deleteTicket: (req, res) => {
         DELETE FROM tickets
         WHERE ticket_id = ${targetId};
 
-        SELECT t.ticket_id, c.firstname, c.lastname, c.phone, c.email, b.brand, b.model, b.color, b.size, t.due_date, t.description
+        SELECT t.ticket_id, s.status, c.firstname, c.lastname, c.phone, c.email, b.brand, b.model, b.color, b.size, t.due_date, t.description
         FROM tickets AS t
+            JOIN statuses AS s
+            ON t.status_id = s.status_id
             JOIN clients AS c
             ON t.client_id = c.client_id
             JOIN bikes AS b
@@ -310,7 +333,7 @@ deleteTicket: (req, res) => {
             SELECT MAX(ticket_id) AS ticket_id
             FROM tickets
             )
-        GROUP BY t.ticket_id, c.firstname, c.lastname, c.phone, c.email, b.brand, b.model, b.color, b.size, t.due_date, t.description;
+        GROUP BY t.ticket_id, s.status, c.firstname, c.lastname, c.phone, c.email, b.brand, b.model, b.color, b.size, t.due_date, t.description;
 
         SELECT SUM(i.price) AS total_price
         FROM tickets AS t
@@ -344,14 +367,16 @@ editTicket: (req, res) => {
             SET brand = '${brand}', model = '${model}', color = '${color}', size = '${size}'
             WHERE bike_id = ${bike_id};
 
-            SELECT t.ticket_id, c.firstname, c.lastname, c.phone, c.email, b.brand, b.model, b.color, b.size, t.due_date, t.description
+            SELECT t.ticket_id, s.status, c.firstname, c.lastname, c.phone, c.email, b.brand, b.model, b.color, b.size, t.due_date, t.description
             FROM tickets AS t
+                JOIN statuses AS s
+                ON t.status_id = s.status_id
                 JOIN clients AS c
                 ON t.client_id = c.client_id
                 JOIN bikes AS b
                 ON c.client_id = b.client_id
                 WHERE t.ticket_id = ${targetId}
-            GROUP BY t.ticket_id, c.firstname, c.lastname, c.phone, c.email, b.brand, b.model, b.color, b.size, t.due_date, t.description;
+            GROUP BY t.ticket_id, s.status, c.firstname, c.lastname, c.phone, c.email, b.brand, b.model, b.color, b.size, t.due_date, t.description;
 
             SELECT SUM(i.price) AS total_price
             FROM tickets AS t

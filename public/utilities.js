@@ -43,7 +43,7 @@ const newTicketHandler = event => {
 }
 
 const displayTicket = (ticketArr) => {
-        let {ticket_id, firstname, lastname, email, phone, brand, model, color, size, due_date, description} = ticketArr[0];
+        let {ticket_id, status, firstname, lastname, email, phone, brand, model, color, size, due_date, description} = ticketArr[0];
         let {total_price} = ticketArr[1];
 
         if(total_price) {
@@ -65,6 +65,9 @@ const displayTicket = (ticketArr) => {
         document.getElementById('viewSize').textContent = size
         document.getElementById('viewDescription').value = description
         document.getElementById('viewDueDate').value = due_date
+        document.getElementById('viewStatus').value = status
+
+        console.log(status)
 
         getTicketItems(ticket_id);
         getTickets();
@@ -145,6 +148,7 @@ const ticketItemsFormHandler = event => {
     event.preventDefault();
     let description = formatDescription(document.getElementById('viewDescription').value);
     let dueDate = document.getElementById('viewDueDate').value;
+    let status = document.getElementById('viewStatus').value;
     let searchInput = formatItems(document.getElementById('searchInput').value);
     let newItemInput = formatItems(document.getElementById('newItemInput').value);
     let newItemPrice = +(document.getElementById('newItemPrice').value);
@@ -154,7 +158,8 @@ const ticketItemsFormHandler = event => {
         let ticketData = {
             ticketId: ticketId,
             description: description,
-            dueDate: dueDate
+            dueDate: dueDate,
+            status: status
         }
         updateTicket(ticketData)
         searchItems(searchInput)
@@ -162,7 +167,8 @@ const ticketItemsFormHandler = event => {
         let ticketData = {
             ticketId: ticketId,
             description: description,
-            dueDate: dueDate
+            dueDate: dueDate,
+            status: status
         }
         let newItemData = {
             ticketId: ticketId,
@@ -177,7 +183,8 @@ const ticketItemsFormHandler = event => {
             let data = {
             ticketId: ticketId,
             description: description,
-            dueDate: dueDate
+            dueDate: dueDate,
+            status: status
         }
         updateTicket(data)
     }
