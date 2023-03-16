@@ -1,7 +1,7 @@
 const newTicket = document.getElementById('newTicket')
 
 const errCallback = err => console.log(err);
-const newTicketCallback = () => window.open('./ticketView.html', '_blank');
+const newTicketCallback = () => window.location.replace('./ticketView.html');
 
 const addNewTicket = (ticketObj) => axios.post(`/api/ticket`, ticketObj).then(newTicketCallback).catch(errCallback)
 

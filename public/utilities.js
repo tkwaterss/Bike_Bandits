@@ -177,6 +177,11 @@ const ticketItemsFormHandler = event => {
         }
         updateTicket(ticketData)
         addNewItem(newItemData)
+
+        let addItemDiv = document.getElementById('newItemDiv');
+        let searchItemDiv = document.getElementById('searchItemDiv');
+        searchItemDiv.classList.remove('hide')
+        addItemDiv.classList.add('hide')
     } else if (newItemInput || newItemPrice) {
         alert('please enter a title and price')
     } else {
@@ -223,7 +228,7 @@ const addItemHandler = event => {
     let ticketId = +(document.getElementById('viewTicketId').textContent)
     let searchDivider = document.getElementById('searchDivider');
     searchDivider.classList.add('hide');
-
+    
     addTicketItem(targetId, ticketId)
     searchItemsContainer.innerHTML = ''
 }
@@ -319,27 +324,27 @@ const displayEditTicket = (ticketArr) => {
 
     let ticketInfo = document.getElementById('newTicket');
     ticketInfo.innerHTML = `
-        <section class="newTicketForm ticketInputs" id="clientForm">
+        <section class="ticketInputs" id="clientForm">
             <h3>Client Information</h3>
-            <label for="viewName">Customer Name:</label>
-            <h4 id="viewName" name="viewName">${firstname} ${lastname}</h4>
-            <label for="viewPhone">Phone:</label>
-            <h4 id="viewPhone" name="viewPhone">${phone}</h4>
-            <label for="viewEmail">Email:</label>
-            <h4 id="viewEmail" name="viewEmail">${email}</h4>
+            <label class="ticket-left" for="viewName">Customer Name:</label>
+            <h4 class="ticket-right" id="viewName" name="viewName">${firstname} ${lastname}</h4>
+            <label class="ticket-left" for="viewPhone">Phone:</label>
+            <h4 class="ticket-right" id="viewPhone" name="viewPhone">${phone}</h4>
+            <label class="ticket-left" for="viewEmail">Email:</label>
+            <h4 class="ticket-right" id="viewEmail" name="viewEmail">${email}</h4>
             <label class="ticket-left" for="viewPrice">Ticket Cost:</label>
             <h4 class="ticket-right" id="viewPrice" name="viewPrice">$ ${total_price}.00</h4>
         </section>
-        <section class="newTicketForm ticketInputs" id="bikeForm">
+        <section class="ticketInputs" id="bikeForm">
             <h3>Bike Information</h3>
-            <label for="viewBrand">Brand:</label>
-            <h4 id="viewBrand" name="viewBrand">${brand}</h4>
-            <label for="viewModel">Model:</label>
-            <h4 id="viewModel" name="viewModel">${model}</h4>
-            <label for="viewColor">Color:</label>
-            <h4 id="viewColor" name="viewColor">${color}</h4>
-            <label for="viewSize">Size:</label>
-            <h4 id="viewSize" name="viewSize">${size}</h4>
+            <label class="ticket-left" for="viewBrand">Brand:</label>
+            <h4 class="ticket-right" id="viewBrand" name="viewBrand">${brand}</h4>
+            <label class="ticket-left" for="viewModel">Model:</label>
+            <h4 class="ticket-right" id="viewModel" name="viewModel">${model}</h4>
+            <label class="ticket-left" for="viewColor">Color:</label>
+            <h4 class="ticket-right" id="viewColor" name="viewColor">${color}</h4>
+            <label class="ticket-left" for="viewSize">Size:</label>
+            <h4 class="ticket-right" id="viewSize" name="viewSize">${size}</h4>
         </section>
     `
     getTickets();
