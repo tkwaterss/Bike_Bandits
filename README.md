@@ -1,6 +1,6 @@
-# Bike Bandits
+# Cycle Mate
 
-Bike Bandits is a Service Management App for use by a bike shop. It's main features are focused around managing service tickets from creation to work completion.
+Cycle Mate is a Service Management App for use by a bike shop. It's main features are focused around managing service tickets from creation to work completion.
 
 More of what why and how
 
@@ -34,5 +34,5 @@ Future versions will include features such as:
 ## Usage
 Please view this short demo video for a walkthrough of the application.
 
-[Bike Bandits Demo Video](https://clipchamp.com/watch/Qu9ZitLVEID)
+[Cycle Mate Demo Video](https://clipchamp.com/watch/Qu9ZitLVEID)
 
